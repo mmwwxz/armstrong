@@ -3,6 +3,7 @@ ENV PYTHONIOENCODING UTF-8
 ENV PYTHONUNBUFFERED 1
 ENV TZ=ASIA/Bishkek
 WORKDIR /app
+ENV PATH="/env/bin:$PATH"
 
 COPY requirements.txt /app/
 RUN pip install --upgrade pip && \
