@@ -251,6 +251,26 @@ button {
   z-index: 60;
   outline: none;
 }
+
+.frame-input::placeholder {
+  position: relative;
+  left: 50px;
+  color: #000000;
+  font-family: Inter, var(--default-font-family);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: left;
+  top: 4px;
+  letter-spacing: 0.2px;
+}
+input:focus {
+  font-size: 20px;
+}
+input:not(:placeholder-shown) {
+    padding-left: 50px;
+  font-size: 25px;
+}
 .frame-2 {
   display: flex;
   align-items: flex-start;

@@ -795,7 +795,8 @@ button {
   gap: 10px;
   position: relative;
   width: 312px;
-  padding: 16px 10px 16px 10px;
+  height: 62px;
+  /*padding: 16px 10px 16px 10px;*/
   background: #ffffff;
   z-index: 92;
   overflow: hidden;
@@ -804,14 +805,34 @@ button {
 .frame-input {
   flex-shrink: 0;
   position: absolute;
-  width: 312px;
+  width: 588px;
   height: 60px;
   top: 0;
   left: 0;
   background: transparent;
   border: none;
-  z-index: 94;
+  z-index: 70;
   outline: none;
+  border-radius: 12px;
+}
+.frame-input::placeholder {
+  position: relative;
+  left: 10px;
+  color: #000000;
+  font-family: Inter, var(--default-font-family);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: left;
+  top: 4px;
+  letter-spacing: 0.2px;
+}
+input:focus {
+  font-size: 20px;
+}
+input:not(:placeholder-shown) {
+    padding-left: 15px;
+  font-size: 20px;
 }
 .length {
   flex-shrink: 0;
@@ -836,7 +857,8 @@ button {
   gap: 10px;
   position: relative;
   width: 312px;
-  padding: 16px 8px 16px 8px;
+  height: 60px;
+  /*padding: 16px 8px 16px 8px;*/
   background: #ffffff;
   z-index: 95;
   overflow: hidden;
@@ -846,13 +868,25 @@ button {
   flex-shrink: 0;
   position: absolute;
   width: 312px;
-  height: 60px;
+  height: 62px;
   top: 0;
   left: 0;
   background: transparent;
   border: none;
   z-index: 97;
   outline: none;
+}
+.frame-input-17::placeholder {
+  position: relative;
+  left: 10px;
+  color: #000000;
+  font-family: Inter, var(--default-font-family);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: left;
+  top: 4px;
+  letter-spacing: 0.2px;
 }
 .width {
   flex-shrink: 0;
@@ -963,6 +997,31 @@ button {
   border: 2px solid #000000;
   z-index: 105;
 }
+.rectangle:active,
+.rectangle-1b:active,
+.rectangle-1c:active {
+  transform: scale(0.95);
+  opacity: 0.8;
+}
+.rectangle,
+.rectangle-1b,
+.rectangle-1c {
+  transition: all 0.2s ease-in-out;
+}
+.rectangle,
+.rectangle-1b,
+.rectangle-1c {
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+.rectangle.selected,
+.rectangle-1b.selected,
+.rectangle-1c.selected {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border: 3px solid #000;
+  transform: scale(1.1);
+}
+
 .frame-1d {
   display: flex;
   align-items: center;
@@ -994,7 +1053,7 @@ button {
   white-space: nowrap;
   z-index: 107;
 }
-.arrow-1e {
+/* .arrow-1e {
   flex-shrink: 0;
   position: relative;
   width: 16px;
@@ -1003,7 +1062,7 @@ button {
     no-repeat center;
   background-size: 100% 100%;
   z-index: 108;
-}
+} */
 .frame-1f {
   display: flex;
   flex-direction: column;

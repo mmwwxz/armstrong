@@ -22,7 +22,7 @@
 <div class="main-container">
     <div class="container">
         <div class="header">
-            <a <a href="{% url 'index' %}">
+            <a <a href="{% url 'index' %}index.html">
             <div class="design-for-box"></div>
         </a>
             <div class="nav">
@@ -95,8 +95,9 @@
                 </div>
             </div>
         </div>
-                  <div class="frame-12">
-                      <span class="ceiling-description">{{ product.description }}</span>
+        <div class="frame-11">
+            <span class="ceiling-description">{{ product.description }}</span>
+            <div class="frame-12">
             <div class="frame-13">
               <span class="calculate-square-meters"
                 >Рассчитать в квадратных метрах</span
@@ -127,6 +128,7 @@
               </div>
             </div>
           </div>
+        </div>
         <div class="frame-1f">
             <span class="similar-products">Похожие товары</span>
             <div class="frame-20">
@@ -277,6 +279,5 @@
   });
 });
     </script>
-
 </body>
 </html>
