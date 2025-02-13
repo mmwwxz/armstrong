@@ -311,8 +311,7 @@ button {
   position: relative;
   width: 312px;
   height: 312px;
-  background: url(../../static/img/222b9df64fd9b02b3288c3e6531d1fa8ba69fd2f.png)
-    no-repeat center;
+  background: no-repeat center;
   background-size: cover;
   z-index: 56;
   border-radius: 12px;
@@ -426,8 +425,7 @@ button {
   position: relative;
   width: 312px;
   height: 312px;
-  background: url(../../static/img/77b648cfe03ab4c4b7ab06b088d30acb475397d5.png)
-    no-repeat center;
+  background: no-repeat center;
   background-size: cover;
   z-index: 58;
   border-radius: 12px;  
@@ -773,8 +771,7 @@ button {
   height: 240px;
   top: 0;
   left: 0;
-  background: url(../../static/img/4264928a-684e-4f7c-93f7-b560d6fdec73.png)
-    no-repeat center;
+  background: no-repeat center;
   background-size: cover;
   z-index: 45;
 }
