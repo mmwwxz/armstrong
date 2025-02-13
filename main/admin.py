@@ -3,7 +3,8 @@ from main.models import Category, Product, Blog, Comment, Request
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ['name', 'category_type']
+    search_fields = ['name', 'category_type']
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'category', 'retail_price', 'wholesale_price', 'bulk_price', 'warranty', 'region')

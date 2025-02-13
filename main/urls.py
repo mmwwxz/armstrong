@@ -8,6 +8,6 @@ urlpatterns = [
     path('catalog/', views.catalog, name='catalog'),
     path('blog/', views.blog, name='blog'),
     path('contact/', views.contact, name='contact'),
-    path('detail/', views.detail, name='detail'),
-    path('detail-blog/', views.detail_blog, name='detail-blog'),
+    path('detail/<int:product_id>/', views.detail, name='detail'),
+    path('detail-blog/<int:blog_id>', views.detail_blog, name='detail-blog'),
 ]
