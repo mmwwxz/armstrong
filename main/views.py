@@ -9,8 +9,10 @@ from main.models import Category, Product, Blog
 def index(request):
     products = list(Product.objects.all())
     random_product = random.choice(products) if products else None
+    random_product1 = random.choice(products) if products else None
+    random_product2 = random.choice(products) if products else None
 
-    return render(request, "index.html", {"random_product": random_product})
+    return render(request, "index.html", {"random_product": random_product, "random_product1": random_product1, "random_product2": random_product2})
 
 
 def catalog(request):
