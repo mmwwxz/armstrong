@@ -145,73 +145,73 @@
             </div>
           </div>
           <div class="frame-16">
-            <a href="{% url 'detail' %}">
-              <div class="component-17">
-                <div class="image-18"></div>
-                <div class="text-inside">
-                  <h3>Потолок Армстронг</h3>
-                  <p>
-                    Эконом сегмент, в виде 12 мм плит Байкал, Оазис, Скала,
-                    Плейн. И настоящих акустических плит от 15 мм толщиной,
-                    позволяющих сделать звукоизоляцию помещения, либо наоборот
-                    звукопоглощение.
-                  </p>
-                  <h4>Цена розничная:</h4>
-                  <span>1426.00 руб</span>
-                  <div class="colors">
-                    <div class="brown"></div>
-                    <div class="white"></div>
-                  </div>
-                  <br />
-                  <button>Купить</button>
-                </div>
-              </div>
-            </a>
-            <a href="{% url 'detail' %}">
-              <div class="component-19">
-                <div class="image-1a"></div>
-                <div class="text-inside">
-                  <h3>Потолок Армстронг</h3>
-                  <p>
-                    Эконом сегмент, в виде 12 мм плит Байкал, Оазис, Скала,
-                    Плейн. И настоящих акустических плит от 15 мм толщиной,
-                    позволяющих сделать звукоизоляцию помещения, либо наоборот
-                    звукопоглощение.
-                  </p>
-                  <h4>Цена розничная:</h4>
-                  <span>1426.00 руб</span>
-                  <div class="colors">
-                    <div class="brown"></div>
-                    <div class="white"></div>
-                  </div>
-                  <br />
-                  <button>Купить</button>
-                </div>
-              </div>
-            </a>
+            <a href="{% url 'detail' random_product.id %}">
+                    <div class="component">
+                        {% if random_product.image1 %}
+                            <div class="image-21"
+                                 style="background-image: url('{{ random_product.image1.url }}')"></div>
+                        {% else %}
+                            <div class="image-21"></div>
+                        {% endif %}
+                        <div class="text-inside">
+                            <h3>{{ random_product.name }}</h3>
+                            <p>{{ random_product.description }}</p>
+                            <h4>Цена розничная:</h4>
+                            <span>{{ random_product.retail_price }} руб</span>
+                            <div class="colors">
+                                <div class="brown"></div>
+                                <div class="white"></div>
+                            </div>
+                            <br/>
+                            <button>Купить</button>
+                        </div>
+                    </div>
+                </a>
+            <a href="{% url 'detail' random_product2.id %}">
+                    <div class="component-22">
+                        {% if random_product2.image1 %}
+                            <div class="image-23"
+                                 style="background-image: url('{{ random_product2.image1.url }}')"></div>
+                        {% else %}
+                            <div class="image-23"></div>
+                        {% endif %}
+                        <div class="text-inside">
+                            <h3>{{ random_product2.name }}</h3>
+                            <p>{{ random_product2.description }}</p>
+                            <h4>Цена розничная:</h4>
+                            <span>{{ random_product2.retail_price }} руб</span>
+                            <div class="colors">
+                                <div class="brown"></div>
+                                <div class="white"></div>
+                            </div>
+                            <br/>
+                            <button>Купить</button>
+                        </div>
+                    </div>
+                </a>
 
-            <a href="{% url 'detail' %}">
-              <div class="component-1b">
-                <div class="image-1c"></div>
-                <div class="text-inside">
-                  <h3>Свет Армстронг</h3>
-                  <p>
-                    Эконом сегмент, в виде 12 мм плит Байкал, Оазис, Скала,
-                    Плейн. И настоящих акустических плит от 15 мм толщиной,
-                    позволяющих сделать звукоизоляцию помещения, либо наоборот
-                    звукопоглощение.
-                  </p>
-                  <h4>Цена розничная:</h4>
-                  <span>1426.00 руб</span>
-                  <div class="colors">
-                    <div class="brown"></div>
-                    <div class="white"></div>
-                  </div>
-                  <br />
-                  <button>Купить</button>
-                </div>
-              </div>
-            </a>
+            <a href="{% url 'detail' random_product3.id %}">
+                    <div class="component-24">
+                        {% if random_product3.image1 %}
+                            <div class="image-25"
+                                 style="background-image: url('{{ random_product3.image1.url }}')"></div>
+                        {% else %}
+                            <div class="image-25"></div>
+                        {% endif %}
+                        <div class="text-inside">
+                            <h3>{{ random_product3.name }}</h3>
+                            <p>{{ random_product3.description }}</p>
+                            <h4>Цена розничная:</h4>
+                            <span>{{ random_product3.retail_price }} руб</span>
+                            <div class="colors">
+                                <div class="brown"></div>
+                                <div class="white"></div>
+                            </div>
+                            <br/>
+                            <button>Купить</button>
+                        </div>
+                    </div>
+                </a>
           </div>
         </div>
         <div class="frame-1d">
