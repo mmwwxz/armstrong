@@ -28,9 +28,6 @@
   box-sizing: border-box;
 }
 
-input,
-select,
-textarea,
 button {
   outline: 0;
 }
@@ -568,7 +565,7 @@ button {
   border: solid 1px #FEBC30;
 }
 
-.card-9:hover .delivery { 
+.card-9:hover .delivery {
   color: #FEBC30;
 }
 
@@ -735,7 +732,7 @@ button {
   z-index: 130;
   font-family: Montserrat, var(--default-font-family);
   transition: visibility 0s, opacity 0.3s ease-in-out;
-   filter: none; 
+   filter: none;
 }
 .component:hover .image-e, .component:hover .image-f {
   filter: blur(5px);
@@ -761,7 +758,7 @@ button {
   border: 2px solid #ffffff;
   z-index: 125;
   border-radius: 12px;
-  transition: background-color 0.3s ease, border 0.3s ease; 
+  transition: background-color 0.3s ease, border 0.3s ease;
 }
 .btn-10:hover {
   background-color: #FEBC30;
@@ -770,7 +767,7 @@ button {
 .btn-10:hover  .custom-order {
     color: #616161;
     transition: color 0.3s ease;
-  } 
+  }
 .custom-order {
   display: flex;
   align-items: flex-start;
@@ -817,7 +814,7 @@ button {
   z-index: 130;
   font-family: Montserrat, var(--default-font-family);
   transition: visibility 0s, opacity 0.3s ease-in-out;
-   filter: none; 
+   filter: none;
 }
 .component-11:hover .image-12{
   filter: blur(10px);
@@ -956,9 +953,9 @@ button {
   border: none;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4); 
+  background-color: rgba(0, 0, 0, 0.4);
   opacity: 0;
-  transition: opacity 0.3s ease; 
+  transition: opacity 0.3s ease;
   border-radius: 12px;
   z-index: 51;
 }
@@ -1038,9 +1035,9 @@ button {
 
 .component-17:hover .text-inside {
   opacity: 1;
-  visibility: visible; 
-  transition: opacity 0.3s ease, visibility 0s; 
-} 
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0s;
+}
 
 .component-17:hover .image-18 {
   filter: blur(5px);
@@ -1061,9 +1058,9 @@ button {
   border: none;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4); 
+  background-color: rgba(0, 0, 0, 0.4);
   opacity: 0;
-  transition: opacity 0.3s ease; 
+  transition: opacity 0.3s ease;
   border-radius: 12px;
   z-index: 51;
 }
@@ -1086,8 +1083,8 @@ button {
 
 .component-19:hover .text-inside {
   opacity: 1;
-  visibility: visible; 
-  transition: opacity 0.3s ease, visibility 0s; 
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0s;
 }
 
 .component-19:hover .image-1a {
@@ -1111,9 +1108,9 @@ button {
   border: none;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4); 
+  background-color: rgba(0, 0, 0, 0.4);
   opacity: 0;
-  transition: opacity 0.3s ease; 
+  transition: opacity 0.3s ease;
   border-radius: 12px;
   z-index: 51;
 }
@@ -1133,8 +1130,8 @@ button {
 
 .component-1b:hover .text-inside {
   opacity: 1;
-  visibility: visible; 
-  transition: opacity 0.3s ease, visibility 0s; 
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0s;
 }
 
 .component-1b:hover .image-1c {
@@ -1987,17 +1984,6 @@ button {
   z-index: 98;
   overflow: hidden;
 }
-.social-icons-46 {
-  flex-shrink: 0;
-  position: relative;
-  width: 40px;
-  height: 40px;
-  background: url(../../static/img/x.png)
-    no-repeat center;
-  background-size: cover;
-  z-index: 99;
-  overflow: hidden;
-}
 .social-icons-47 {
   flex-shrink: 0;
   position: relative;
@@ -2019,16 +2005,6 @@ button {
   background-size: cover;
   z-index: 101;
   overflow: hidden;
-}
-.image-48 {
-  flex-shrink: 0;
-  position: relative;
-  width: 538px;
-  height: 332px;
-  background: url(../../static/img/bishkek.png)
-    no-repeat center;
-  background-size: cover;
-  z-index: 102;
 }
 .img-e {
   position: absolute;

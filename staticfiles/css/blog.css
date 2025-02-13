@@ -773,8 +773,6 @@ button {
   height: 240px;
   top: 0;
   left: 0;
-  background: url(../../static/img/4264928a-684e-4f7c-93f7-b560d6fdec73.png)
-    no-repeat center;
   background-size: cover;
   z-index: 45;
 }

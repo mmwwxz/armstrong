@@ -43,30 +43,24 @@ def catalog(request):
     }
     return render(request, 'catalog.html', context)
 
+
 def blog(request):
-    # Get all blog posts
-    blogs = Blog.objects.all().order_by('-created_at')
-
-    # Create paginator object with 8 items per page (2 rows of 4 items)
+    blogs = Blog.objects.all()
     paginator = Paginator(blogs, 8)
-
-    # Get page number from request, default to 1 if not provided
     page_number = request.GET.get('page', 1)
-
-    # Get the Page object for the current page
     page_obj = paginator.get_page(page_number)
 
-    # Group blogs into two rows of four
-    blogs_list = list(page_obj)
+    current_blogs = list(page_obj)
     blogs_groups = {
-        'first_group': blogs_list[0:4] if len(blogs_list) > 0 else [],
-        'second_group': blogs_list[4:8] if len(blogs_list) > 4 else [],
+        'first_group': current_blogs[:4],
+        'second_group': current_blogs[4:8]
     }
 
     context = {
         'page_obj': page_obj,
         'blogs_groups': blogs_groups,
     }
+
     return render(request, 'blog.html', context)
 
 
