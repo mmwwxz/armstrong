@@ -920,7 +920,7 @@ input:not(:placeholder-shown) {
   align-items: center;
   flex-wrap: nowrap;
   flex-shrink: 0;
-  gap: 24px;
+  gap: 40px;
   position: relative;
   width: 648px;
   z-index: 99;

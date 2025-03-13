@@ -1,5 +1,4 @@
 import random
-
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 
@@ -12,12 +11,37 @@ def index(request):
     random_product2 = random.choice(products) if products else None
     random_product3 = random.choice(products) if products else None
 
-    return render(request, "index.html", {"random_product": random_product, "random_product2": random_product2, "random_product3": random_product3})
+    return render(request, "index.html", {"random_product": random_product, "random_product2": random_product2,
+                                          "random_product3": random_product3})
 
 
 def catalog(request):
-    # Get all products
+    # Start with all products
     products = Product.objects.all()
+
+    # Get filter parameters
+    category_type = request.GET.get('category_type')
+    subcategory = request.GET.get('subcategory')
+    material_composition = request.GET.get('material_composition')
+    region = request.GET.get('region')
+
+    # Apply filters
+    if category_type:
+        # Filter by category type (lighting or ceilings)
+        categories = Category.objects.filter(category_type=category_type)
+        products = products.filter(category__in=categories)
+
+    if subcategory:
+        # Filter by specific subcategory name
+        products = products.filter(category__name=subcategory)
+
+    if material_composition:
+        # Filter by material composition
+        products = products.filter(material_composition=material_composition)
+
+    if region:
+        # Filter by region (material origin)
+        products = products.filter(region=region)
 
     # Create paginator object with 9 items per page
     paginator = Paginator(products, 9)
@@ -36,16 +60,35 @@ def catalog(request):
         'third_group': products_list[6:9] if len(products_list) > 6 else []
     }
 
+    # Get all filter options for the template
+    lighting_categories = Category.objects.filter(category_type='lighting')
+    ceiling_categories = Category.objects.filter(category_type='ceilings')
+    composition = Category.objects.filter(category_type='composition')
+    material = Category.objects.filter(category_type='material')
+
+    # Get unique material compositions and regions for filters
+    # Using values_list with distinct to get unique values
+    material_compositions = Product.objects.values_list('material_composition', flat=True).distinct()
+    regions = Product.objects.values_list('region', flat=True).distinct()
+
     context = {
         'page_obj': page_obj,
         'products_groups': products_groups,
         'categories': Category.objects.all(),
+        'lighting_categories': lighting_categories,
+        'ceiling_categories': ceiling_categories,
+        'material_compositions': material_compositions,
+        'regions': regions,
+        # Pass current filter settings to maintain state
+        'current_category_type': category_type,
+        'current_subcategory': subcategory,
+        'current_material_composition': material_composition,
+        'current_region': region,
     }
     return render(request, 'catalog.html', context)
 
-
 def blog(request):
-    blogs = Blog.objects.all()
+    blogs = Blog.objects.all().order_by('-created_at')
     paginator = Paginator(blogs, 8)
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
@@ -71,12 +114,24 @@ def contact(request):
 def detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
 
-    # Get random products excluding current product
-    all_products = list(Product.objects.exclude(id=product_id))
-    random_products = random.sample(all_products, min(len(all_products), 3))
+    category = product.category
+
+    similar_products = Product.objects.filter(category=category).exclude(id=product_id)
+
+    if similar_products.count() < 3:
+        other_products = Product.objects.exclude(id=product_id).exclude(category=category)
+        all_products = list(similar_products) + list(other_products)
+    else:
+        all_products = list(similar_products)
+
+    import random
+    random.shuffle(all_products)
+
+    random_products = all_products[:min(len(all_products), 3)]
 
     context = {
         'product': product,
+        'category': category,
         'random_product': random_products[0] if len(random_products) > 0 else None,
         'random_product2': random_products[1] if len(random_products) > 1 else None,
         'random_product3': random_products[2] if len(random_products) > 2 else None,

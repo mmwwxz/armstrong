@@ -3,6 +3,8 @@ from django.db import models
 CATEGORY_CHOICES = [
     ('lighting', 'Освещение'),
     ('ceilings', 'Потолки'),
+    ('composition', 'Состав материала:'),
+    ('material', 'Материалы из:'),
 ]
 
 class Category(models.Model):
@@ -11,7 +13,7 @@ class Category(models.Model):
         verbose_name = 'Категория'
 
     name = models.CharField(max_length=255, unique=True, verbose_name='Название категории')
-    category_type = models.CharField(max_length=10, choices=CATEGORY_CHOICES, verbose_name='Тип категории', default='lighting')
+    category_type = models.CharField(max_length=40, choices=CATEGORY_CHOICES, verbose_name='Тип категории', default='lighting')
 
     def __str__(self):
         return self.name

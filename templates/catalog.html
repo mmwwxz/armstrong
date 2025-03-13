@@ -18,11 +18,166 @@
     />
     <link rel="stylesheet" href="{% static 'css/catalog.css' %}"/>
     <style>
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin: 30px 0;
-        }
+        .button.active, .button-3.active, .button-6.active, .button-9.active {
+    background-color: rgba(255, 255, 255, 0.27);
+    border: 1px solid #FEBC30;
+}
+
+/* Active submenu item */
+.submenu a.active {
+    background-color: #FEBC30;
+    color: white;
+    font-weight: bold;
+}
+
+/* Submenu styling */
+.submenu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 100;
+    border-radius: 4px;
+    padding: 8px 0;
+}
+
+.submenu a {
+    color: #333;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.submenu a:hover {
+    background-color: #f5f5f5;
+}
+
+/* Show submenu on hover */
+.button:hover .submenu,
+.button-3:hover .submenu,
+.button-6:hover .submenu,
+.button-9:hover .submenu {
+    display: block;
+}
+
+/* Filter reset button */
+.filter-reset {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.filter-reset a {
+    padding: 8px 16px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.filter-reset a:hover {
+    background-color: #e0e0e0;
+}
+              /* Pagination container */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Arrows */
+.pagination-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f5f5f5;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-decoration: none;
+}
+
+.pagination-arrow:hover {
+    background-color: #e0e0e0;
+}
+
+.pagination-arrow.disabled {
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
+}
+
+.arrow-left-round, .arrow-right-round {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow-left-round .arrow {
+    width: 8px;
+    height: 8px;
+    border-left: 2px solid #333;
+    border-bottom: 2px solid #333;
+    transform: rotate(45deg);
+}
+
+.arrow-right-round .arrow {
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #333;
+    border-top: 2px solid #333;
+    transform: rotate(45deg);
+}
+
+/* Page numbers */
+.pagination-numbers {
+    display: flex;
+    align-items: center;
+}
+
+.pagination-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin: 0 5px;
+    border-radius: 50%;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.pagination-number:hover {
+    background-color: #e0e0e0;
+}
+
+.pagination-number.active {
+    background-color: #FEBC30;
+    color: white;
+    cursor: default;
+}
+
+.pagination-ellipsis {
+    margin: 0 5px;
+    color: #333;
+    font-size: 14px;
+}
 
         .step-links {
             display: flex;
@@ -95,56 +250,57 @@
           </div>
           <input placeholder="Найти" class="frame-input" />
         </div>
-        <div class="frame-2">
-            <button class="button">
-                <span class="span">Освещение</span>
-                <div class="div"></div>
-                <div class="submenu">
-                    <a href="#">Лампы</a>
-                    <a href="#">Светильники</a>
-                    <a href="#">Аксессуары</a>
-                    <a href="#">Оборудование</a>
-                </div>
-            </button>
-
-            <button class="button-3">
-                <span class="span-4">Потолки</span>
-                <div class="div-5"></div>
-                <div class="submenu">
-                    <a href="#">Плиты
-                    </a>
-                    <a href="#">Натяжные</a>
-                    <a href="#">Ассексуары</a>
-                    <a href="#">Оборудование</a>
-                </div>
-            </button>
-
-            <button class="button-6">
-                <span class="span-7">Состав материала:</span>
-                <div class="div-8"></div>
-                <div class="submenu">
-                    <a href="#">Дерево
-                    </a>
-                    <a href="#">Пластик</a>
-                    <a href="#">Гипсокартон</a>
-                    <a href="#">Фарфор</a>
-                </div>
-            </button>
-            <button class="button-9">
-                <span class="span-a">Материалы из:</span>
-                <div class="div-b"></div>
-                <div class="submenu">
-                    <a href="#">Плиты
-                    </a>
-                    <a href="#">Натяжные</a>
-                    <a href="#">Ассексуары</a>
-                    <a href="#">Оборудование</a>
-                </div>
-            </button>
+        <!-- Replace the filter buttons section in your catalog.html -->
+<div class="frame-2">
+    <button class="button {% if current_category_type == 'lighting' %}active{% endif %}">
+        <span class="span">Освещение</span>
+        <div class="div"></div>
+        <div class="submenu">
+            <a href="?category_type=lighting{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}" class="{% if current_category_type == 'lighting' and not current_subcategory %}active{% endif %}"></a>
+            <a href="?subcategory=Лампы{% if composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}" class="{% if current_subcategory == 'Лампы' %}active{% endif %}">Лампы</a>
+            <a href="?subcategory=Светильники{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}" class="{% if current_subcategory == 'Светильники' %}active{% endif %}">Светильники</a>
+            <a href="?subcategory=Аксессуары{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}" class="{% if current_subcategory == 'Аксессуары' %}active{% endif %}">Аксессуары</a>
+            <a href="?subcategory=Оборудование{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}" class="{% if current_subcategory == 'Оборудование' %}active{% endif %}">Оборудование</a>
         </div>
+    </button>
+
+    <button class="button-3 {% if current_category_type == 'ceilings' %}active{% endif %}">
+        <span class="span-4">Потолки</span>
+        <div class="div-5"></div>
+        <div class="submenu">
+            <a href="?category_type=ceilings{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}" class="{% if current_category_type == 'ceilings' and not current_subcategory %}active{% endif %}"></a>
+            <a href="?subcategory=Реечные подвесные потолки{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}" class="{% if current_subcategory == 'Реечные подвесные потолки' %}active{% endif %}">Реечные подвесные потолки</a>
+            <a href="?subcategory=Решетчатые потолки ГРИЛЬЯТО{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}" class="{% if current_subcategory == 'Решетчатые потолки ГРИЛЬЯТО' %}active{% endif %}">Решетчатые потолки "ГРИЛЬЯТО"</a>
+            <a href="?subcategory=Подвесные потолки Армстронг{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}" class="{% if current_subcategory == 'Подвесные потолки Армстронг' %}active{% endif %}">Подвесные потолки Армстронг</a>
+        </div>
+    </button>
+
+    <button class="button-6 {% if current_material_composition == 'composition' %}active{% endif %}">
+        <span class="span-7">Состав материала:</span>
+        <div class="div-8"></div>
+        <div class="submenu">
+            <a href="?category_type=material{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}" class="{% if current_category_type == 'material' and not current_subcategory %}active{% endif %}"></a>
+            <a href="?material_composition=Дерево{% if current_category_type %}&category_type={{ current_category_type }}{% endif %}{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}" class="{% if current_material_composition == 'Дерево' %}active{% endif %}">Дерево</a>
+            <a href="?material_composition=Пластик{% if current_category_type %}&category_type={{ current_category_type }}{% endif %}{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}" class="{% if current_material_composition == 'Пластик' %}active{% endif %}">Пластик</a>
+            <a href="?material_composition=Гипсокартон{% if current_category_type %}&category_type={{ current_category_type }}{% endif %}{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}" class="{% if current_material_composition == 'Гипсокартон' %}active{% endif %}">Гипсокартон</a>
+            <a href="?material_composition=Фарфор{% if current_category_type %}&category_type={{ current_category_type }}{% endif %}{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}" class="{% if current_material_composition == 'Фарфор' %}active{% endif %}">Фарфор</a>
+        </div>
+    </button>
+
+    <button class="button-9 {% if current_region == 'material' %}active{% endif %}">
+        <span class="span-a">Материалы из:</span>
+        <div class="div-b"></div>
+        <div class="submenu">
+            <a href="?region=Европа{% if current_category_type %}&category_type={{ current_category_type }}{% endif %}{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}" class="{% if current_region == 'Европа' %}active{% endif %}">Европа</a>
+            <a href="?region=Восток{% if current_category_type %}&category_type={{ current_category_type }}{% endif %}{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}" class="{% if current_region == 'Восток' %}active{% endif %}">Восток</a>
+            <a href="?region=Китай{% if current_category_type %}&category_type={{ current_category_type }}{% endif %}{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}" class="{% if current_region == 'Китай' %}active{% endif %}">Китай</a>
+            <a href="?region=СНГ{% if current_category_type %}&category_type={{ current_category_type }}{% endif %}{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}" class="{% if current_region == 'СНГ' %}active{% endif %}">СНГ</a>
+        </div>
+    </button>
+</div>
         <div class="div-c">
             <a href="{% url 'index' %}" class="span-d">Главная</a
-            ><span class="span-e">/ Плиты</span>
+            ><span class="span-e">/ Каталог</span>
         </div>
         <div class="frame-1c">
             {% for product in products_groups.first_group %}
@@ -229,23 +385,66 @@
         {% endif %}
     </div>
 
+<div class="pagination-wrapper">
+    {% if page_obj.paginator.num_pages > 1 %}
     <div class="pagination">
-    <span class="step-links">
+        <!-- Previous page arrow -->
         {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; первая</a>
-            <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="pagination-arrow pagination-prev">
+                <div class="arrow-left-round">
+                    <div class="arrow"></div>
+                </div>
+            </a>
+        {% else %}
+            <span class="pagination-arrow pagination-prev disabled">
+                <div class="arrow-left-round">
+                    <div class="arrow"></div>
+                </div>
+            </span>
         {% endif %}
 
-        <span class="current">
-            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
-        </span>
+        <!-- Page numbers -->
+        <div class="pagination-numbers">
+            {% if page_obj.number > 3 %}
+                <a href="?page=1{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="pagination-number">1</a>
+                {% if page_obj.number > 4 %}
+                    <span class="pagination-ellipsis">...</span>
+                {% endif %}
+            {% endif %}
 
+            {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
+                    <span class="pagination-number active">{{ num }}</span>
+                {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
+                    <a href="?page={{ num }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="pagination-number">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.number < page_obj.paginator.num_pages|add:"-2" %}
+                {% if page_obj.number < page_obj.paginator.num_pages|add:"-3" %}
+                    <span class="pagination-ellipsis">...</span>
+                {% endif %}
+                <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="pagination-number">{{ page_obj.paginator.num_pages }}</a>
+            {% endif %}
+        </div>
+
+        <!-- Next page arrow -->
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">следующая</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
+            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="pagination-arrow pagination-next">
+                <div class="arrow-right-round">
+                    <div class="arrow"></div>
+                </div>
+            </a>
+        {% else %}
+            <span class="pagination-arrow pagination-next disabled">
+                <div class="arrow-right-round">
+                    <div class="arrow"></div>
+                </div>
+            </span>
         {% endif %}
-    </span>
     </div>
+    {% endif %}
+</div>
 
     <div class="line"></div>
     <div class="container">

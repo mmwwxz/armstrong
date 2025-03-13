@@ -16,6 +16,103 @@
     <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
   </head>
   <body>
+  <style>
+      /* Pagination container */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Arrows */
+.pagination-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f5f5f5;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-decoration: none;
+}
+
+.pagination-arrow:hover {
+    background-color: #e0e0e0;
+}
+
+.pagination-arrow.disabled {
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
+}
+
+.arrow-left-round, .arrow-right-round {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow-left-round .arrow {
+    width: 8px;
+    height: 8px;
+    border-left: 2px solid #333;
+    border-bottom: 2px solid #333;
+    transform: rotate(45deg);
+}
+
+.arrow-right-round .arrow {
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #333;
+    border-top: 2px solid #333;
+    transform: rotate(45deg);
+}
+
+/* Page numbers */
+.pagination-numbers {
+    display: flex;
+    align-items: center;
+}
+
+.pagination-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin: 0 5px;
+    border-radius: 50%;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.pagination-number:hover {
+    background-color: #e0e0e0;
+}
+
+.pagination-number.active {
+    background-color: #FEBC30;
+    color: white;
+    cursor: default;
+}
+
+.pagination-ellipsis {
+    margin: 0 5px;
+    color: #333;
+    font-size: 14px;
+}
+  </style>
     <div class="main-container">
       <div class="container">
         <div class="header">
@@ -68,6 +165,64 @@
     </div>
     {% endfor %}
 </div>
+      {% if page_obj.paginator.num_pages > 1 %}
+<div class="pagination">
+    <!-- Previous page arrow -->
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="pagination-arrow pagination-prev">
+            <div class="arrow-left-round">
+                <div class="arrow"></div>
+            </div>
+        </a>
+    {% else %}
+        <span class="pagination-arrow pagination-prev disabled">
+            <div class="arrow-left-round">
+                <div class="arrow"></div>
+            </div>
+        </span>
+    {% endif %}
+
+    <!-- Page numbers -->
+    <div class="pagination-numbers">
+        {% if page_obj.number > 3 %}
+            <a href="?page=1" class="pagination-number">1</a>
+            {% if page_obj.number > 4 %}
+                <span class="pagination-ellipsis">...</span>
+            {% endif %}
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if num == page_obj.number %}
+                <span class="pagination-number active">{{ num }}</span>
+            {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
+                <a href="?page={{ num }}" class="pagination-number">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.number < page_obj.paginator.num_pages|add:"-2" %}
+            {% if page_obj.number < page_obj.paginator.num_pages|add:"-3" %}
+                <span class="pagination-ellipsis">...</span>
+            {% endif %}
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="pagination-number">{{ page_obj.paginator.num_pages }}</a>
+        {% endif %}
+    </div>
+
+    <!-- Next page arrow -->
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="pagination-arrow pagination-next">
+            <div class="arrow-right-round">
+                <div class="arrow"></div>
+            </div>
+        </a>
+    {% else %}
+        <span class="pagination-arrow pagination-next disabled">
+            <div class="arrow-right-round">
+                <div class="arrow"></div>
+            </div>
+        </span>
+    {% endif %}
+</div>
+{% endif %}
         <div class="frame-b">
           <span class="our-videos-on-youtube">Наши видео на Youtube</span>
           <div class="youtube">
