@@ -117,6 +117,115 @@
   pointer-events: none;
 }
 
+/* Styles for Armstrong Calculator */
+.calculation-results {
+  margin-top: 20px;
+  background-color: #f8f8f8;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+
+.calculation-results h3 {
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.calculation-results ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 5px;
+}
+
+.calculation-results li {
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px dashed #e0e0e0;
+}
+
+.calculation-results li:last-child {
+  border-bottom: none;
+}
+
+.calculation-results strong {
+  color: #2a2a2a;
+  font-weight: 600;
+}
+
+/* Enhance input fields */
+.frame-15 input, .frame-16 input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border 0.3s ease;
+}
+
+.frame-15 input:focus, .frame-16 input:focus {
+  border-color: #febc30;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(254, 188, 48, 0.2);
+}
+
+/* Style the Buy button */
+.button {
+  background-color: #febc30;
+  color: #2a2a2a;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #e5a718;
+}
+
+.button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Armstrong calculation summary on contact page */
+.armstrong-calculation-summary {
+  background-color: #f8f8f8;
+  padding: 20px;
+  margin-bottom: 25px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.armstrong-calculation-summary h3 {
+  margin-top: 0;
+  color: #333;
+  font-size: 18px;
+  border-bottom: 2px solid #febc30;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+}
+
+.armstrong-calculation-summary p {
+  margin: 8px 0;
+}
+
+.armstrong-calculation-summary ul {
+  padding-left: 20px;
+}
+
+.armstrong-calculation-summary li {
+  margin-bottom: 5px;
+}
+
 </style>
 <div class="main-container">
     <div class="container">
@@ -422,6 +531,197 @@
     </div>
 </div>
 <script>
+// Armstrong ceiling calculator
+document.addEventListener('DOMContentLoaded', function() {
+  // Get the form elements
+  const lengthInput = document.querySelector('.frame-15 input');
+  const widthInput = document.querySelector('.frame-16 input');
+  const buyButton = document.querySelector('.button');
+  const resultsDiv = document.createElement('div');
+  resultsDiv.className = 'calculation-results';
+  resultsDiv.style.marginTop = '20px';
+  resultsDiv.style.backgroundColor = '#f5f5f5';
+  resultsDiv.style.padding = '15px';
+  resultsDiv.style.borderRadius = '8px';
+  resultsDiv.style.border = '1px solid #ddd';
+
+  // Insert results container after the calculation inputs
+  document.querySelector('.frame-14').parentNode.insertBefore(resultsDiv, document.querySelector('.frame-14').nextSibling);
+
+  // Add event listeners for real-time calculation
+  lengthInput.addEventListener('input', calculateMaterials);
+  widthInput.addEventListener('input', calculateMaterials);
+
+  // Function to calculate materials based on the formulas from the handwritten note
+  function calculateMaterials() {
+    const length = parseFloat(lengthInput.value) || 0;
+    const width = parseFloat(widthInput.value) || 0;
+
+    if (length > 0 && width > 0) {
+      const area = length * width;
+
+      // Calculate materials based on the formulas
+      const tiles = Math.ceil(area / 0.36); // Divide by 0.36 and round up
+      const edgeProfile = Math.ceil(area * 0.2); // Area × 0.2
+      const suspensionProfile = Math.ceil(area * 0.27); // Area × 0.27
+      const suspensionElements = Math.ceil(area * 1.7); // Area × 1.7
+
+      // Format and display results
+      resultsDiv.innerHTML = `
+        <h3 style="margin-bottom: 10px; color: #333;">Результаты расчета:</h3>
+        <p>Площадь потолка: <strong>${area.toFixed(2)} м²</strong></p>
+        <p style="margin-bottom: 5px;">Потребуется:</p>
+        <ul style="list-style-type: none; padding-left: 0; margin-top: 5px;">
+          <li style="margin-bottom: 5px;">- Плиты: <strong>${tiles} шт.</strong></li>
+          <li style="margin-bottom: 5px;">- Направляющий уголок: <strong>${edgeProfile} шт.</strong></li>
+          <li style="margin-bottom: 5px;">- Подвесной профиль (3м): <strong>${suspensionProfile} шт.</strong></li>
+          <li style="margin-bottom: 5px;">- Подвес: <strong>${suspensionElements} шт.</strong></li>
+        </ul>
+      `;
+
+      // Store calculation data for form submission
+      const calculationData = {
+        area: area.toFixed(2),
+        tiles: tiles,
+        edgeProfile: edgeProfile,
+        suspensionProfile: suspensionProfile,
+        suspensionElements: suspensionElements
+      };
+
+      // Save to sessionStorage for use during form submission
+      sessionStorage.setItem('armstrongCalculation', JSON.stringify(calculationData));
+
+      // Enable buy button
+      buyButton.disabled = false;
+    } else {
+      // Clear results if inputs are invalid
+      resultsDiv.innerHTML = '';
+      buyButton.disabled = true;
+    }
+  }
+
+  // Handle the buy button click to redirect to contact form with data
+  buyButton.addEventListener('click', function(e) {
+    e.preventDefault();
+
+    const length = parseFloat(lengthInput.value) || 0;
+    const width = parseFloat(widthInput.value) || 0;
+
+    if (length > 0 && width > 0) {
+      const calculationData = JSON.parse(sessionStorage.getItem('armstrongCalculation') || '{}');
+      const productName = document.querySelector('.armstrong').textContent.trim();
+
+      // Create query parameters to send to contact page
+      const queryParams = new URLSearchParams({
+        product: productName,
+        length: length,
+        width: width,
+        area: calculationData.area,
+        tiles: calculationData.tiles,
+        edgeProfile: calculationData.edgeProfile,
+        suspensionProfile: calculationData.suspensionProfile,
+        suspensionElements: calculationData.suspensionElements,
+        message: `Заказ плит Армстронг "${productName}". Размеры помещения: ${length}×${width}м. Площадь: ${calculationData.area}м². Необходимые материалы: Плиты - ${calculationData.tiles}шт, Направляющий уголок - ${calculationData.edgeProfile}шт, Подвесной профиль - ${calculationData.suspensionProfile}шт, Подвес - ${calculationData.suspensionElements}шт.`
+      });
+
+      // Redirect to contact page with calculation data
+      window.location.href = `{% url 'contact' %}?${queryParams.toString()}`;
+    }
+  });
+});
+
+// Script to handle Armstrong calculation data in the contact form
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if we have calculation data in the URL
+  const urlParams = new URLSearchParams(window.location.search);
+
+  // Fields we expect from the calculation
+  const calculationFields = [
+    'product', 'length', 'width', 'area', 'tiles',
+    'edgeProfile', 'suspensionProfile', 'suspensionElements',
+    'message'
+  ];
+
+  // Check if this is an Armstrong calculation form submission
+  const hasCalculationData = calculationFields.some(field => urlParams.has(field));
+
+  if (hasCalculationData) {
+    // Get the message field - this might be different depending on your form structure
+    // Adjust the selector as needed
+    const messageField = document.querySelector('textarea[name="message"]');
+    const nameField = document.querySelector('input[name="name"]');
+    const subjectField = document.querySelector('input[name="subject"]');
+
+    if (messageField) {
+      // Create a formatted message with all the calculation details
+      const product = urlParams.get('product') || '';
+      const length = urlParams.get('length') || '';
+      const width = urlParams.get('width') || '';
+      const area = urlParams.get('area') || '';
+      const tiles = urlParams.get('tiles') || '';
+      const edgeProfile = urlParams.get('edgeProfile') || '';
+      const suspensionProfile = urlParams.get('suspensionProfile') || '';
+      const suspensionElements = urlParams.get('suspensionElements') || '';
+
+      const calculationMessage = `
+Заказ плит Армстронг "${product}"
+
+Расчет потолка:
+- Размеры помещения: ${length}×${width}м
+- Площадь: ${area}м²
+
+Необходимые материалы:
+- Плиты: ${tiles} шт.
+- Направляющий уголок: ${edgeProfile} шт.
+- Подвесной профиль (3м): ${suspensionProfile} шт.
+- Подвес: ${suspensionElements} шт.
+
+Дополнительная информация:
+`;
+
+      // Set the message field value
+      messageField.value = calculationMessage;
+
+      // Set subject field if it exists
+      if (subjectField) {
+        subjectField.value = `Заказ плит Армстронг "${product}" - ${area}м²`;
+      }
+
+      // Create a summary box to display at the top of the form
+      const formContainer = messageField.closest('form');
+
+      if (formContainer) {
+        const summaryBox = document.createElement('div');
+        summaryBox.className = 'armstrong-calculation-summary';
+        summaryBox.style.backgroundColor = '#f5f5f5';
+        summaryBox.style.padding = '15px';
+        summaryBox.style.marginBottom = '20px';
+        summaryBox.style.borderRadius = '8px';
+        summaryBox.style.border = '1px solid #ddd';
+
+        summaryBox.innerHTML = `
+          <h3 style="margin-top: 0; color: #333;">Детали заказа плит Армстронг</h3>
+          <p><strong>Продукт:</strong> ${product}</p>
+          <p><strong>Размеры:</strong> ${length}×${width}м</p>
+          <p><strong>Площадь:</strong> ${area}м²</p>
+          <p><strong>Материалы:</strong></p>
+          <ul style="padding-left: 20px;">
+            <li>Плиты: ${tiles} шт.</li>
+            <li>Направляющий уголок: ${edgeProfile} шт.</li>
+            <li>Подвесной профиль (3м): ${suspensionProfile} шт.</li>
+            <li>Подвес: ${suspensionElements} шт.</li>
+          </ul>
+          <p style="margin-bottom: 0; font-style: italic;">Эта информация будет добавлена в ваше сообщение.</p>
+        `;
+
+        // Insert the summary box at the top of the form
+        formContainer.insertBefore(summaryBox, formContainer.firstChild);
+      }
+    }
+  }
+});
+
+
 // For the custom radio buttons
 document.querySelectorAll('.rectangle, .rectangle-1b, .rectangle-1c').forEach(item => {
   item.addEventListener('click', () => {
