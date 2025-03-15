@@ -427,7 +427,7 @@ button {
 }
 
 .card:hover .elements {
-         background-image: url(../img/location-01.png);
+         background-image: url(../../static/img/location-01.png);
 }
 .gift {
   flex-shrink: 0;

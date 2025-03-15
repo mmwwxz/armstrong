@@ -19,6 +19,105 @@
     <link rel="stylesheet" href="{% static 'css/detail.css' %}"/>
 </head>
 <body>
+<style>
+/* Добавьте эти стили в ваш CSS файл */
+
+/* Контейнер для слайдера */
+.frame-4 {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 350px;
+  background-color: #2A2A2A;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Стрелки навигации */
+.arrow-left-round, .arrow-left-round-5 {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  z-index: 5;
+  transition: background-color 0.3s ease;
+}
+
+.arrow-left-round {
+  left: 20px;
+}
+
+.arrow-left-round-5 {
+  right: 20px;
+}
+
+.arrow-left-round:hover, .arrow-left-round-5:hover {
+  background-color: rgba(254, 188, 48, 0.5);
+}
+
+.arrow {
+  width: 10px;
+  height: 10px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(45deg);
+}
+
+.arrow-left-round-5 .arrow {
+  transform: rotate(225deg);
+}
+
+/* Контейнер для изображений */
+.image-slider {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Стили для отдельного изображения */
+.image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #333;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 1;
+}
+
+.image.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+/* Счетчик изображений */
+.from-1-to-10 {
+  display: block;
+  margin-top: 16px;
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+}
+
+/* Добавляем стили для неактивных стрелок, когда достигнут конец слайдера */
+.arrow-left-round.disabled, .arrow-left-round-5.disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+</style>
 <div class="main-container">
     <div class="container">
         <div class="header">
@@ -51,19 +150,64 @@
         </div>
         <div class="frame-2">
             <div class="frame-3">
-                <div class="frame-4">
-                    <div class="arrow-left-round">
-                        <div class="arrow"></div>
-                    </div>
-                    {% if product.image1 %}
-                        <div class="image" style="background-image: url('{{ product.image1.url }}')"></div>
-                    {% else %}
-                        <div class="image"></div>
-                    {% endif %}
-                    <div class="arrow-left-round-5"></div>
-                </div>
-                <span class="from-1-to-10">1 из 10</span>
-            </div>
+    <div class="frame-4">
+        <div class="arrow-left-round" id="prev-image">
+            <div class="arrow"></div>
+        </div>
+
+        <!-- Контейнер для изображений -->
+        <div class="image-slider">
+            {% if product.image1 %}
+                <div class="image active" data-index="1" style="background-image: url('{{ product.image1.url }}')"></div>
+            {% endif %}
+
+            {% if product.image2 %}
+                <div class="image" data-index="2" style="background-image: url('{{ product.image2.url }}')"></div>
+            {% endif %}
+
+            {% if product.image3 %}
+                <div class="image" data-index="3" style="background-image: url('{{ product.image3.url }}')"></div>
+            {% endif %}
+
+            {% if product.image4 %}
+                <div class="image" data-index="4" style="background-image: url('{{ product.image4.url }}')"></div>
+            {% endif %}
+
+            {% if product.image5 %}
+                <div class="image" data-index="5" style="background-image: url('{{ product.image5.url }}')"></div>
+            {% endif %}
+
+            {% if product.image6 %}
+                <div class="image" data-index="6" style="background-image: url('{{ product.image6.url }}')"></div>
+            {% endif %}
+
+            {% if product.image7 %}
+                <div class="image" data-index="7" style="background-image: url('{{ product.image7.url }}')"></div>
+            {% endif %}
+
+            {% if product.image8 %}
+                <div class="image" data-index="8" style="background-image: url('{{ product.image8.url }}')"></div>
+            {% endif %}
+
+            {% if product.image9 %}
+                <div class="image" data-index="9" style="background-image: url('{{ product.image9.url }}')"></div>
+            {% endif %}
+
+            {% if product.image10 %}
+                <div class="image" data-index="10" style="background-image: url('{{ product.image10.url }}')"></div>
+            {% endif %}
+
+            {% if not product.image1 %}
+                <div class="image active" data-index="1"></div>
+            {% endif %}
+        </div>
+
+        <div class="arrow-left-round-5" id="next-image">
+            <div class="arrow"></div>
+        </div>
+    </div>
+    <span class="from-1-to-10" id="image-counter">1 из <span id="total-images">0</span></span>
+</div>
             <div class="frame-6">
                 <div class="harakt">
                     <div class="frame-7">
@@ -212,13 +356,13 @@
             <span class="youtube">Наши видео на Youtube</span>
             <div class="noor">
                 <div class="youtube-27">
-                    <div class="image-28"></div>
+                    <iframe width="424" height="240" src="https://www.youtube.com/embed/VpBmBDb0IHI?si=C2XcLJ2Q-hsgjxBQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
                 <div class="noor-29">
-                    <div class="image-2a"></div>
+                    <iframe width="424" height="240" src="https://www.youtube.com/embed/VpBmBDb0IHI?si=C2XcLJ2Q-hsgjxBQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
                 <div class="noor-2b">
-                    <div class="image-2c"></div>
+                    <iframe width="424" height="240" src="https://www.youtube.com/embed/VpBmBDb0IHI?si=C2XcLJ2Q-hsgjxBQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
@@ -277,8 +421,9 @@
         </div>
     </div>
 </div>
-    <script>
-         document.querySelectorAll('.rectangle, .rectangle-1b, .rectangle-1c').forEach(item => {
+<script>
+// For the custom radio buttons
+document.querySelectorAll('.rectangle, .rectangle-1b, .rectangle-1c').forEach(item => {
   item.addEventListener('click', () => {
     document.querySelectorAll('.rectangle, .rectangle-1b, .rectangle-1c').forEach(el => {
       el.classList.remove('selected');
@@ -286,6 +431,117 @@
     item.classList.add('selected');
   });
 });
-    </script>
+
+// Image slider functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Find all slider elements
+    const images = document.querySelectorAll('.image-slider .image');
+    const prevButton = document.getElementById('prev-image');
+    const nextButton = document.getElementById('next-image');
+    const imageCounter = document.getElementById('image-counter');
+    const totalImagesElem = document.getElementById('total-images');
+
+    // If no images, hide the slider
+    if (images.length === 0) {
+        const sliderContainer = document.querySelector('.frame-4');
+        if (sliderContainer) {
+            sliderContainer.style.display = 'none';
+        }
+        return;
+    }
+
+    // Set total number of images
+    const totalImages = images.length;
+    totalImagesElem.textContent = totalImages;
+
+    // Variable to track current image
+    let currentIndex = 0;
+
+    // Show or hide navigation buttons based on current index
+    function updateNavigationButtons() {
+        prevButton.classList.toggle('disabled', currentIndex === 0);
+        nextButton.classList.toggle('disabled', currentIndex === totalImages - 1);
+    }
+
+    // Update image counter
+    function updateCounter() {
+        imageCounter.textContent = `${currentIndex + 1} из ${totalImages}`;
+    }
+
+    // Show image by index
+    function showImage(index) {
+        // Hide all images
+        images.forEach(img => {
+            img.classList.remove('active');
+        });
+
+        // Show selected image
+        images[index].classList.add('active');
+
+        // Update counter and button states
+        currentIndex = index;
+        updateCounter();
+        updateNavigationButtons();
+    }
+
+    // Navigation button handlers
+    prevButton.addEventListener('click', function() {
+        if (currentIndex > 0) {
+            showImage(currentIndex - 1);
+        }
+    });
+
+    nextButton.addEventListener('click', function() {
+        if (currentIndex < totalImages - 1) {
+            showImage(currentIndex + 1);
+        }
+    });
+
+    // Add keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft') {
+            if (currentIndex > 0) {
+                showImage(currentIndex - 1);
+            }
+        } else if (e.key === 'ArrowRight') {
+            if (currentIndex < totalImages - 1) {
+                showImage(currentIndex + 1);
+            }
+        }
+    });
+
+    // Initialize slider
+    showImage(0);
+
+    // Add swipe for mobile devices
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    const slider = document.querySelector('.image-slider');
+
+    slider.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    }, false);
+
+    slider.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, false);
+
+    function handleSwipe() {
+        if (touchEndX < touchStartX - 50) {
+            // Swipe left - next image
+            if (currentIndex < totalImages - 1) {
+                showImage(currentIndex + 1);
+            }
+        } else if (touchEndX > touchStartX + 50) {
+            // Swipe right - previous image
+            if (currentIndex > 0) {
+                showImage(currentIndex - 1);
+            }
+        }
+    }
+});
+</script>
 </body>
 </html>
