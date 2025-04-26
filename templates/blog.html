@@ -1,0 +1,603 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Блог</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"
+    />
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
+  </head>
+  <body>
+  <style>
+    
+.main-container {
+height: auto;
+}
+.pagination {
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 30px 0;
+font-family: 'Inter', sans-serif;
+}
+.pagination-arrow { 
+display: flex; 
+align-items: center; 
+justify-content: center;
+width: 40px;
+height: 40px;
+border-radius: 50%;
+background-color: #f5f5f5;
+margin: 10px;
+cursor: pointer;
+transition: background-color 0.25;
+text-decoration: none;
+}
+/* Page numbers */ 
+.pagination-numbers { 
+	display: flex;
+	align-items: center;
+}
+.pagination-number { 
+	display: flex; 
+	align-items: center; 
+	justify-content: center; 
+	width: 40px;
+
+height: 40px;
+margin: 0 5px; 
+border-radius: 50%;
+text-decoration: none;
+color: #333;
+font-size: 14px;
+font-weight: 500;
+transition: background-color 0.2s;
+}
+.pagination-number:hover {
+background-color: #e0e0e0;
+}
+.pagination-number.active {
+background-color: #FEBC30; 
+color: white;
+cursor: default;
+}
+.pagination-ellipsis {
+margin: 0 5px;
+color: #333;
+font-size: 14px;
+}
+
+/* Обновленные стили для элемента item */
+.component .item {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.component .item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.component .item:hover {
+  opacity: 1;
+}
+
+.component .item::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5); 
+  backdrop-filter: blur(8px);
+  border-radius: 0 0 12px 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.component .item:hover::after {
+  opacity: 1;
+}
+
+.component .item h3 {
+  position: absolute;
+  bottom: 15px;
+  color: #febc30;
+  font-family: Inter, var(--default-font-family);
+  font-size: 25px;
+  font-weight: bold;
+  left: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 56;
+  pointer-events: none;
+}
+
+.component .item:hover h3 {
+  opacity: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .design-box-new {
+            width: 180px;
+        height: 38px;
+  }
+  .container {
+    width: 100%;
+    padding: 0 15px;
+  }
+  .get-in-touch  {
+    font-size: 21px;
+  }
+   .header {
+        background: rgba(182, 177, 177, 0.25);
+    width: 95%;
+    margin: 10px 10px;
+    padding: 10px 15px;
+    flex-direction: column;
+    gap: 15px;
+    border-radius: 20px;
+  }
+
+  .contacts-href {
+    width: 100%;
+  }
+  
+  .nav {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .btns {
+    width: 100%;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+
+   .frame-16, .frame-21, .youtube, .review {
+    margin-top: 10px;
+  }
+  
+  /* Navigation menu toggle for mobile */
+  .nav-toggle {
+    display: block;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  /* Mobile menu styles - add a toggle button in your HTML */
+  .mobile-menu-active .nav {
+    display: flex;
+  }
+ .frame {
+    margin: 20px 15px;
+    width: auto;
+  }
+  
+  /* Blog Grid */
+  .frame-2, .frame-5 {
+    width: 100%;
+    padding: 0 15px;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .component {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
+  }
+  
+  .item {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .item h3 {
+    font-size: 20px;
+    opacity: 1;
+  }
+  
+  .item::after {
+    opacity: 1;
+    height: 40%;
+  }
+  
+  /* Pagination */
+  .pagination {
+    flex-wrap: wrap;
+  }
+  
+  .pagination-numbers {
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* YouTube Section */
+  .frame-b {
+    width: 100%;
+    padding: 0 15px;
+  }
+  
+  .youtube {
+    width: 100%;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .noor, .noor-c, .noor-e {
+    width: 100%;
+    height: 200px;
+  }
+  
+  .noor iframe, .noor-c iframe, .noor-e iframe {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Footer */
+  .frame-10 {
+    width: 100%;
+    padding: 20px 15px;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .frame-11 {
+    width: 100%;
+  }
+  
+  .flex-row-ae {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    gap: 20px;
+    width: 100%;
+  }
+  
+  .frame-12, .frame-14, .frame-16 {
+    width: 100%;
+  }
+  
+  .group-13, .group-15 {
+    width: 100%;
+  }
+  
+  .privacy-policy, .terms-of-service {
+    width: 100%;
+  }
+  
+  .cn {
+    width: 100%;
+    margin: 30px 0 0 0;
+    justify-content: flex-start;
+  }
+  
+  /* Map */
+  .frame-10 iframe {
+    width: 100%;
+    height: 250px;
+  }
+}
+
+/* Tablet Responsive Styles */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  /* Header */
+  .header {
+    width: 95%;
+    margin: 15px auto;
+    padding: 15px 25px;
+  }
+  
+  .nav {
+    width: auto;
+    gap: 15px;
+  }
+  
+  /* Blog Grid */
+  .frame-2, .frame-5 {
+    width: 100%;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .component {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
+  }
+  
+  .item {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* YouTube Section */
+  .frame-b {
+    width: 100%;
+    padding: 0 20px;
+  }
+  
+  .youtube {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .noor, .noor-c, .noor-e {
+    width: 100%;
+    height: 200px;
+  }
+  
+  .noor iframe, .noor-c iframe, .noor-e iframe {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Footer */
+  .frame-10 {
+    width: 100%;
+    padding: 30px 20px;
+    gap: 30px;
+  }
+  
+  .frame-11 {
+    width: 50%;
+  }
+  
+  /* Map */
+  .frame-10 iframe {
+    width: 45%;
+    height: 300px;
+  }
+}
+
+/* Additional styles for better mobile experience */
+@media screen and (max-width: 767px) {
+  /* Make items clickable even with overlay */
+  .component .item {
+    position: relative;
+  }
+  
+  .component .item a {
+    position: relative;
+    z-index: 60;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Ensure horizontal scrolling is disabled */
+  body {
+    overflow-x: hidden;
+  }
+
+.goods-services, .completed-projects, .blog-1, .contacts {
+  font-size: 18px;
+}
+  
+  /* Improve navigation buttons readability */
+  /* .goods-services, .completed-projects, .blog-1, .contacts {
+    text-align: center;
+    display: block;
+    width: 100%;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  } */
+  
+  /* Improve footer layout */
+  .group {
+    height: auto;
+  }
+  
+  /* Social icons responsive layout */
+  .cn {
+    flex-wrap: wrap;
+  }
+}  </style>
+    <div class="main-container">
+      <div class="container">
+        <div class="header">
+          <a href="{% url 'index' %}">
+            <div class="design-box-new"></div>
+          </a>
+          <div class="nav">
+            <a href="{% url 'catalog' %}" class="goods-services">Товары и услуги</a>
+            <a href="{% url 'index' %}" class="completed-projects"
+              >Реализованные проекты</a
+            >
+            <a href="{% url 'blog' %}" class="blog-1">Блог</a>
+            <a href="{% url 'contact' %}" class="contacts">Контакты</a>
+          </div>
+          <a class="contacts-href" href="{% url 'contact' %}">
+          <button class="btns">
+            <div class="btn">
+              <span class="get-in-touch">Выйти на связь</span>
+            </div>
+          </button>
+          </a>
+
+        </div>
+        <div class="frame">
+          <a href="{% url 'index' %}" class="home">Главная</a>
+<a href="{% url 'blog' %}" class="blog-link">/ Блог</a>
+        </div>
+<div class="frame-2">
+    {% for blog in blogs_groups.first_group %}
+    <div class="component">
+    <a href="{% url 'detail-blog' blog.id %}">
+        <div class="item">
+            <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+            <h3>{{ blog.title }}</h3>
+        </div>
+    </a>
+</div>
+    
+    {% endfor %}
+</div>
+
+<div class="frame-5">
+    {% for blog in blogs_groups.second_group %}
+    <div class="component">
+        <a href="{% url 'detail-blog' blog.id %}">
+            <div class="item">
+                <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="item">
+                <h3>{{ blog.title }}</h3>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+      {% if page_obj.paginator.num_pages > 1 %}
+<div class="pagination">
+    <!-- Previous page arrow -->
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="pagination-arrow pagination-prev">
+            <div class="arrow-left-round">
+                <div class="arrow"></div>
+            </div>
+        </a>
+    {% else %}
+        <span class="pagination-arrow pagination-prev disabled">
+            <div class="arrow-left-round">
+                <div class="arrow"></div>
+            </div>
+        </span>
+    {% endif %}
+
+    <!-- Page numbers -->
+    <div class="pagination-numbers">
+        {% if page_obj.number > 3 %}
+            <a href="?page=1" class="pagination-number">1</a>
+            {% if page_obj.number > 4 %}
+                <span class="pagination-ellipsis">...</span>
+            {% endif %}
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if num == page_obj.number %}
+                <span class="pagination-number active">{{ num }}</span>
+            {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
+                <a href="?page={{ num }}" class="pagination-number">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.number < page_obj.paginator.num_pages|add:"-2" %}
+            {% if page_obj.number < page_obj.paginator.num_pages|add:"-3" %}
+                <span class="pagination-ellipsis">...</span>
+            {% endif %}
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="pagination-number">{{ page_obj.paginator.num_pages }}</a>
+        {% endif %}
+    </div>
+
+    <!-- Next page arrow -->
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="pagination-arrow pagination-next">
+            <div class="arrow-right-round">
+                <div class="arrow"></div>
+            </div>
+        </a>
+    {% else %}
+        <span class="pagination-arrow pagination-next disabled">
+            <div class="arrow-right-round">
+                <div class="arrow"></div>
+            </div>
+        </span>
+    {% endif %}
+</div>
+{% endif %}
+        <div class="frame-b">
+          <span class="our-videos-on-youtube">Наши видео на Youtube</span>
+          <div class="youtube">
+            <div class="noor"><iframe width="424" height="240" src="https://www.youtube.com/embed/VpBmBDb0IHI?si=C2XcLJ2Q-hsgjxBQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+            <div class="noor-c"><iframe width="424" height="240" src="https://www.youtube.com/embed/VpBmBDb0IHI?si=C2XcLJ2Q-hsgjxBQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+            <div class="noor-e"><iframe width="424" height="240" src="https://www.youtube.com/embed/VpBmBDb0IHI?si=C2XcLJ2Q-hsgjxBQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+          </div>
+        </div>
+      </div>
+      <div class="line"></div>
+      <div class="container">
+        <div class="frame-10">
+          <div class="frame-11">
+            <div class="design-for-box-new"></div>
+            <div class="group">
+              <div class="flex-row-ae">
+                <div class="frame-12">
+                  <a href="{% url 'catalog' %}" class="products-and-services"
+                    >Товары и услуги</a
+                  >
+                  <div class="group-13">
+                    <span class="span-lighting">светильники</span
+                    ><span class="span-tiles">плиты</span
+                    ><span class="span-repair">ремонт</span
+                    ><span class="span-wiring-service">услуга проводки</span>
+                  </div>
+                </div>
+                <div class="frame-14">
+                  <a href="{% url 'index' %}" class="span-projects"
+                    >Реализованные проекты</a
+                  >
+                  <div class="group-15">
+                    <span class="span-offices">офисы</span
+                    ><span class="span-apartments">квартиры</span
+                    ><span class="span-malls">торговые центры</span
+                    ><span class="span-others">другие</span>
+                  </div>
+                </div>
+                <div class="frame-16">
+                  <a href="{% url 'blog' %}" class="span-blog">Блог</a>
+                  <a href="{% url 'contact' %}" class="contacts-17">Контакты</a>
+                  <span class="privacy-policy"
+                    >Политика<br />конфиденциальности</span
+                  ><span class="terms-of-service"
+                    >Политика<br />соглашения</span
+                  >
+                </div>
+              </div>
+              <div class="cn">
+                <div class="social-icons"></div>
+                <div class="social-icons-18"></div>
+                <div class="social-icons-19"></div>
+                <div class="social-icons-1a"></div>
+                <div class="social-icons-1b"></div>
+                <div class="social-icons-1c"></div>
+              </div>
+            </div>
+          </div>
+<div><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2924.6559395115605!2d74.67486337613511!3d42.858997571150965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb6cfabd5350d%3A0x69ebc1fac406de9c!2z0JDRjiDQs9GA0LDQvdC0!5e0!3m2!1sru!2skg!4v1741892598498!5m2!1sru!2skg" width="750" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+
+        </a>
+        </div>
+      </div>
+    </div>
+    <!-- Generated by Codia AI - https://codia.ai/ -->
+    <script src="{% static 'js/index.js' %}"></script>
+
+  </body>
+</html>

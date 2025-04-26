@@ -1,0 +1,1018 @@
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Armstrong</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400&display=swap"
+    />
+    <link rel="stylesheet" href="{% static 'css/catalog.css' %}" />
+
+<style>
+      .map {
+        width: 580px;
+      }
+      .main-container {
+        height: auto;
+      }
+      @media (max-width: 767px) {
+        .frame-input::placeholder {
+          padding-left: 20px;
+        }
+
+        .button,
+        .button-3,
+        .button-6,
+        .button-9 {
+          z-index: 5000;
+          position: relative;
+        }
+
+        /* Ensure no overlapping */
+        .button.active {
+          z-index: 5001;
+        }
+      }
+      @media (max-width: 767px) {
+        .button,
+        .button-3,
+        .button-6,
+        .button-9 {
+          position: relative;
+          z-index: 1000; /* Base z-index */
+        }
+
+        .button.active,
+        .button-3.active,
+        .button-6.active,
+        .button-9.active {
+          z-index: 2000; /* Higher z-index when active */
+        }
+
+        .frame-2 {
+          position: relative;
+          margin-bottom: 50px; /* Add extra space to accommodate open dropdowns */
+        }
+      }
+
+      .button-3.active .submenu {
+        top: calc(100% + 1px) !important; /* Force positioning */
+      }
+
+      .button-6.active .submenu {
+        top: calc(100% + 1px) !important; /* Force positioning */
+      }
+
+      .filter-reset {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .filter-reset a {
+        padding: 8px 16px;
+        background-color: #f5f5f5;
+        border-radius: 4px;
+        color: #333;
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.2s;
+      }
+
+      .filter-reset a:hover {
+        background-color: #e0e0e0;
+      }
+      /* Pagination container */
+      .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 30px 0;
+        font-family: "Inter", sans-serif;
+      }
+
+      /* Arrows */
+      .pagination-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #f5f5f5;
+        margin: 0 10px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        text-decoration: none;
+      }
+
+      .pagination-arrow:hover {
+        background-color: #e0e0e0;
+      }
+
+      .pagination-arrow.disabled {
+        opacity: 0.5;
+        cursor: default;
+        pointer-events: none;
+      }
+
+      .arrow-left-round,
+      .arrow-right-round {
+        position: relative;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .arrow-left-round .arrow {
+        width: 8px;
+        height: 8px;
+        border-left: 2px solid #333;
+        border-bottom: 2px solid #333;
+        transform: rotate(45deg);
+      }
+
+      .arrow-right-round .arrow {
+        width: 8px;
+        height: 8px;
+        border-right: 2px solid #333;
+        border-top: 2px solid #333;
+        transform: rotate(45deg);
+      }
+
+      /* Page numbers */
+      .pagination-numbers {
+        display: flex;
+        align-items: center;
+      }
+
+      .pagination-number {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        margin: 0 5px;
+        border-radius: 50%;
+        text-decoration: none;
+        color: #333;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background-color 0.2s;
+      }
+
+      .pagination-number:hover {
+        background-color: #e0e0e0;
+      }
+
+      .pagination-number.active {
+        background-color: #febc30;
+        color: white;
+        cursor: default;
+      }
+
+      .pagination-ellipsis {
+        margin: 0 5px;
+        color: #333;
+        font-size: 14px;
+      }
+
+      .step-links {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-family: "Montserrat", sans-serif;
+      }
+
+      .step-links a {
+        padding: 8px 15px;
+        background-color: #f5f5f5;
+        border-radius: 5px;
+        color: #333;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .step-links a:hover {
+        background-color: #e0e0e0;
+      }
+
+      .current {
+        padding: 8px 15px;
+        background-color: #fff;
+        border-radius: 5px;
+        color: #333;
+        border: 1px solid #e0e0e0;
+      }
+
+      .frame-custom {
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 24px;
+        position: relative;
+        width: 1440px;
+        margin: 24px 0 0 0;
+        padding: 0 60px 0 60px;
+        z-index: 10;
+      }
+
+      /* Base responsive settings */
+      html,
+      body {
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1440px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 15px;
+      }
+
+      @media (max-width: 1024px) {
+        input:not(:placeholder-shown) {
+          margin-left: 20px;
+        }
+
+        .header {
+          width: 95%;
+          margin: 20px auto;
+        }
+
+        .nav {
+          width: auto;
+          gap: 15px;
+        }
+
+        .goods-services,
+        .completed-projects,
+        .blog,
+        .contacts {
+          font-size: 18px;
+        }
+
+        .btn {
+          width: auto;
+          padding: 8px 15px;
+        }
+
+        .get-in-touch {
+          font-size: 21px;
+        }
+
+        .frame {
+          width: 100%;
+          margin: 30px auto;
+          padding: 0 15px;
+        }
+
+        .component {
+          width: 100%;
+        }
+
+        .found {
+          width: 100%;
+        }
+
+        .frame-input {
+          width: 100%;
+        }
+        input::placeholder {
+          margin-left: 20px;
+        }
+        .frame-input::placeholder {
+          margin-left: 20px;
+        }
+        /* Filter buttons */
+        .frame-2 {
+          width: 100%;
+          flex-wrap: wrap;
+          gap: 15px;
+          justify-content: center;
+          padding: 0 15px;
+        }
+
+        .button,
+        .button-3,
+        .button-6,
+        .button-9 {
+          width: 48%;
+          margin-bottom: 10px;
+          padding: 10px;
+        }
+
+        .span,
+        .span-4,
+        .span-7,
+        .span-a {
+          font-size: 18px;
+        }
+
+        /* Product grid */
+        .div-f,
+        .frame-15,
+        .frame-1c,
+        .frame-custom {
+          width: 100%;
+          display: block;
+          gap: 20px;
+          padding: 0 15px;
+        }
+
+        .div-10,
+        .component-11,
+        .component-13,
+        .component-16,
+        .component-18,
+        .component-1a,
+        .component-1d,
+        .component-1f,
+        .component-21 {
+          width: 45%;
+          height: 350px;
+        }
+
+        /* Footer adjustments */
+        .frame-23 {
+          width: 100%;
+          flex-direction: column;
+          gap: 30px;
+          padding: 30px 15px;
+        }
+
+        .frame-24 {
+          width: 100%;
+        }
+
+        .screenshot,
+        iframe {
+          width: 100%;
+          height: 300px;
+        }
+        iframe {
+          margin-top: 400px;
+        }
+        .map {
+          width: 420px;
+        }
+      }
+
+      @media (max-width: 767px) {
+        iframe {
+          margin-top: 400px;
+        }
+
+        .header {
+          background: rgba(182, 177, 177, 0.25);
+          /* background-color: ; */
+          justify-content: center;
+          align-items: center;
+          display: flex;
+          width: 95%;
+          margin: 10px auto;
+          padding: 10px 15px;
+          flex-direction: column;
+          gap: 10px;
+          border-radius: 20px;
+        }
+        .design-for-box {
+          width: 226px;
+          height: 48px;
+          margin-top: 10px;
+        }
+        .nav {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
+          margin: 0;
+          padding: 0;
+        }
+        /* .header {
+    flex-direction: column;
+    margin: 15px auto;
+    padding: 15px;
+    gap: 10px;
+    border-radius: 25px;
+  } */
+
+        .goods-services,
+        .completed-projects,
+        .blog,
+        .contacts {
+          font-size: 18px;
+          padding: 4px 6px;
+        }
+        .completed-projects,
+        .blog,
+        .contacts {
+          /* font-size: 15px; */
+          white-space: normal;
+          text-align: center;
+          height: auto;
+          padding: 0px 0px;
+        }
+
+        .design-for-box {
+          margin-bottom: 10px;
+        }
+        /* 
+  .nav {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  } */
+
+        .btns {
+          width: 100%;
+        }
+
+        .btn {
+          width: 100%;
+          padding: 8px 10px;
+        }
+
+        /* Filter buttons */
+        .button,
+        .button-3,
+        .button-6,
+        .button-9 {
+          width: 100%;
+          margin-bottom: 10px;
+        }
+
+        .submenu {
+          width: 100%;
+        }
+
+        /* Product grid - single column on mobile */
+        .div-10,
+        .component-11,
+        .component-13,
+        .component-16,
+        .component-18,
+        .component-1a,
+        .component-1d,
+        .component-1f,
+        .component-21 {
+          width: 100%;
+          height: 350px;
+          margin-bottom: 15px;
+        }
+
+        /* Footer adjustments */
+        .flex-row {
+          flex-direction: column;
+          width: 100%;
+          height: auto;
+          gap: 30px;
+        }
+
+        .frame-26,
+        .frame-28,
+        .frame-2b {
+          width: 100%;
+        }
+
+        .cn {
+          justify-content: start;
+          width: 100%;
+          margin: 30px 0;
+        }
+
+        /* Text hover info adjustments */
+        .text-inside {
+          left: 50%;
+          width: 85%;
+        }
+
+        /* Pagination adjustments */
+        .pagination {
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+
+        .pagination-numbers {
+          order: 2;
+          width: 100%;
+          justify-content: center;
+          margin-top: 10px;
+        }
+      }
+
+      /* Extra small devices */
+      @media (max-width: 480px) {
+        .header {
+          height: 240px;
+        }
+        .btn {
+          width: 320px;
+        }
+        .goods-services,
+        .completed-projects,
+        .blog,
+        .contacts {
+          font-size: 18px;
+        }
+
+        .get-in-touch {
+          font-size: 21px;
+        }
+
+        .span,
+        .span-4,
+        .span-7,
+        .span-a {
+          font-size: 16px;
+        }
+
+        /* Product cards hover info */
+        .text-inside h3 {
+          font-size: 22px;
+        }
+
+        .text-inside p {
+          font-size: 10px;
+        }
+
+        .text-inside h4,
+        .text-inside span {
+          font-size: 16px;
+        }
+
+        .text-inside button {
+          width: 100px;
+          height: 35px;
+        }
+      }
+
+      .submenu {
+        z-index: 4000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="container">
+        <div class="header">
+          <a href="{% url 'index' %}">
+            <div class="design-for-box"></div>
+          </a>
+          <div class="nav">
+            <a href="{% url 'catalog' %}" class="goods-services"
+              >Товары и услуги</a
+            >
+            <a href="{% url 'index' %}" class="completed-projects"
+              >Реализованные проекты</a
+            >
+            <a href="{% url 'blog' %}" class="blog">Блог</a
+            ><a href="{% url 'contact' %}" class="contacts">Контакты</a>
+          </div>
+          <a href="{% url 'contact' %}" class="btns">
+            <div class="btn">
+              <span class="get-in-touch">Выйти на связь</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="frame">
+          <div class="component">
+            <div class="found">
+              <div class="frame-1"></div>
+            </div>
+          </div>
+          <input placeholder="Найти" class="frame-input" />
+        </div>
+        <div class="frame-2">
+          <button
+            class="button {% if current_category_type == 'lighting' %}active{% endif %}"
+          >
+            <span class="span">Освещение</span>
+            <div class="div"></div>
+            <div class="submenu">
+              <a
+                href="?category_type=lighting{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}"
+                class="{% if current_category_type == 'lighting' and not current_subcategory %}active{% endif %}"
+              ></a>
+              <a
+                href="?subcategory=Лампы{% if composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}"
+                class="{% if current_subcategory == 'Лампы' %}active{% endif %}"
+                >Лампы</a
+              >
+              <a
+                href="?subcategory=Светильники{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}"
+                class="{% if current_subcategory == 'Светильники' %}active{% endif %}"
+                >Светильники</a
+              >
+              <a
+                href="?subcategory=Аксессуары{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}"
+                class="{% if current_subcategory == 'Аксессуары' %}active{% endif %}"
+                >Аксессуары</a
+              >
+              <a
+                href="?subcategory=Оборудование{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}"
+                class="{% if current_subcategory == 'Оборудование' %}active{% endif %}"
+                >Оборудование</a
+              >
+            </div>
+          </button>
+
+          <button
+            class="button-3 {% if current_category_type == 'ceilings' %}active{% endif %}"
+          >
+            <span class="span-4">Потолки</span>
+            <div class="div-5"></div>
+            <div class="submenu">
+              <a
+                href="?category_type=ceilings{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}"
+                class="{% if current_category_type == 'ceilings' and not current_subcategory %}active{% endif %}"
+              ></a>
+              <a
+                href="?subcategory=Реечные подвесные потолки{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}"
+                class="{% if current_subcategory == 'Реечные подвесные потолки' %}active{% endif %}"
+                >Реечные подвесные потолки</a
+              >
+              <a
+                href="?subcategory=Решетчатые потолки ГРИЛЬЯТО{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}"
+                class="{% if current_subcategory == 'Решетчатые потолки ГРИЛЬЯТО' %}active{% endif %}"
+                >Решетчатые потолки "ГРИЛЬЯТО"</a
+              >
+              <a
+                href="?subcategory=Подвесные потолки Армстронг{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}"
+                class="{% if current_subcategory == 'Подвесные потолки Армстронг' %}active{% endif %}"
+                >Подвесные потолки Армстронг</a
+              >
+            </div>
+          </button>
+
+          <button
+            class="button-6 {% if current_material_composition == 'composition' %}active{% endif %}"
+          >
+            <span class="span-7">Состав материала:</span>
+            <div class="div-8"></div>
+            <div class="submenu">
+              <a
+                href="?category_type=material{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}"
+                class="{% if current_category_type == 'material' and not current_subcategory %}active{% endif %}"
+              ></a>
+              <a
+                href="?material_composition=Дерево{% if current_category_type %}&category_type={{ current_category_type }}{% endif %}{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}"
+                class="{% if current_material_composition == 'Дерево' %}active{% endif %}"
+                >Дерево</a
+              >
+              <a
+                href="?material_composition=Пластик{% if current_category_type %}&category_type={{ current_category_type }}{% endif %}{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}"
+                class="{% if current_material_composition == 'Пластик' %}active{% endif %}"
+                >Пластик</a
+              >
+              <a
+                href="?material_composition=Гипсокартон{% if current_category_type %}&category_type={{ current_category_type }}{% endif %}{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}"
+                class="{% if current_material_composition == 'Гипсокартон' %}active{% endif %}"
+                >Гипсокартон</a
+              >
+              <a
+                href="?material_composition=Фарфор{% if current_category_type %}&category_type={{ current_category_type }}{% endif %}{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_region %}&region={{ current_region }}{% endif %}"
+                class="{% if current_material_composition == 'Фарфор' %}active{% endif %}"
+                >Фарфор</a
+              >
+            </div>
+          </button>
+
+          <button
+            class="button-9 {% if current_region == 'material' %}active{% endif %}"
+          >
+            <span class="span-a">Материалы из:</span>
+            <div class="div-b"></div>
+            <div class="submenu">
+              <a
+                href="?region=Европа{% if current_category_type %}&category_type={{ current_category_type }}{% endif %}{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}"
+                class="{% if current_region == 'Европа' %}active{% endif %}"
+                >Европа</a
+              >
+              <a
+                href="?region=Восток{% if current_category_type %}&category_type={{ current_category_type }}{% endif %}{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}"
+                class="{% if current_region == 'Восток' %}active{% endif %}"
+                >Восток</a
+              >
+              <a
+                href="?region=Китай{% if current_category_type %}&category_type={{ current_category_type }}{% endif %}{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}"
+                class="{% if current_region == 'Китай' %}active{% endif %}"
+                >Китай</a
+              >
+              <a
+                href="?region=СНГ{% if current_category_type %}&category_type={{ current_category_type }}{% endif %}{% if current_subcategory %}&subcategory={{ current_subcategory }}{% endif %}{% if current_material_composition %}&material_composition={{ current_material_composition }}{% endif %}"
+                class="{% if current_region == 'СНГ' %}active{% endif %}"
+                >СНГ</a
+              >
+            </div>
+          </button>
+        </div>
+        <div class="div-c">
+          <a href="{% url 'index' %}" class="span-d">Главная</a
+          ><span class="span-e">/ Каталог</span>
+        </div>
+        <div class="frame-1c">
+          {% for product in products_groups.first_group %}
+          <a href="{% url 'detail' product.id %}">
+            <div class="component-1d">
+              {% if product.image1 %}
+              <div
+                class="image-1e"
+                style="background-image: url('{{ product.image1.url }}')"
+              ></div>
+              {% else %}
+              <div class="image-1e"></div>
+              {% endif %}
+              <div class="text-inside">
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+                <h4>Цена розничная:</h4>
+                <span>{{ product.retail_price }} руб</span>
+                <div class="colors">
+                  <div class="brown"></div>
+                  <div class="white"></div>
+                </div>
+                <br />
+                <button>Купить</button>
+              </div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+
+        {% if products_groups.second_group %}
+        <div class="frame-custom">
+          {% for product in products_groups.second_group %}
+          <a href="{% url 'detail' product.id %}">
+            <div class="component-1d">
+              {% if product.image1 %}
+              <div
+                class="image-1e"
+                style="background-image: url('{{ product.image1.url }}')"
+              ></div>
+              {% else %}
+              <div class="image-1e"></div>
+              {% endif %}
+              <div class="text-inside">
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+                <h4>Цена розничная:</h4>
+                <span>{{ product.retail_price }} руб</span>
+                <div class="colors">
+                  <div class="brown"></div>
+                  <div class="white"></div>
+                </div>
+                <br />
+                <button>Купить</button>
+              </div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+        {% endif %} {% if products_groups.third_group %}
+        <div class="frame-15">
+          {% for product in products_groups.third_group %}
+          <a href="{% url 'detail' product.id %}">
+            <div class="component-1d">
+              {% if product.image1 %}
+              <div
+                class="image-1e"
+                style="background-image: url('{{ product.image1.url }}')"
+              ></div>
+              {% else %}
+              <div class="image-1e"></div>
+              {% endif %}
+              <div class="text-inside">
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+                <h4>Цена розничная:</h4>
+                <span>{{ product.retail_price }} руб</span>
+                <div class="colors">
+                  <div class="brown"></div>
+                  <div class="white"></div>
+                </div>
+                <br />
+                <button>Купить</button>
+              </div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+
+<!-- Pagination container -->
+<div class="pagination-wrapper">
+  {% if page_obj.paginator.num_pages > 1 %}
+  <div class="pagination">
+    <!-- Previous page arrow -->
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="pagination-arrow pagination-prev">
+      <div class="arrow-left-round">
+        <div class="arrow"></div>
+      </div>
+    </a>
+    {% else %}
+    <span class="pagination-arrow pagination-prev disabled">
+      <div class="arrow-left-round">
+        <div class="arrow"></div>
+      </div>
+    </span>
+    {% endif %}
+
+    <!-- Page numbers -->
+    <div class="pagination-numbers">
+      {% if page_obj.number > 3 %}
+      <a href="?page=1{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="pagination-number">1</a>
+      {% if page_obj.number > 4 %}
+      <span class="pagination-ellipsis">...</span>
+      {% endif %}
+      {% endif %}
+      
+      {% for num in page_obj.paginator.page_range %}
+        {% if num == page_obj.number %}
+        <span class="pagination-number active">{{ num }}</span>
+        {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
+        <a href="?page={{ num }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="pagination-number">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+      
+      {% if page_obj.number < page_obj.paginator.num_pages|add:"-2" %}
+        {% if page_obj.number < page_obj.paginator.num_pages|add:"-3" %}
+        <span class="pagination-ellipsis">...</span>
+        {% endif %}
+        <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="pagination-number">{{ page_obj.paginator.num_pages }}</a>
+      {% endif %}
+    </div>
+
+    <!-- Next page arrow -->
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="pagination-arrow pagination-next">
+      <div class="arrow-right-round">
+        <div class="arrow"></div>
+      </div>
+    </a>
+    {% else %}
+    <span class="pagination-arrow pagination-next disabled">
+      <div class="arrow-right-round">
+        <div class="arrow"></div>
+      </div>
+    </span>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+
+      <div class="line"></div>
+      <div class="container">
+        <div class="frame-23">
+          <div class="frame-24">
+            <div class="design-for-box-25"></div>
+            <div class="group">
+              <div class="flex-row">
+                <div class="frame-26">
+                  <a href="{% url 'catalog' %}" class="goods-and-services"
+                    >Товары и услуги</a
+                  >
+                  <div class="group-27">
+                    <span class="lighting">светильники</span
+                    ><span class="tiles">плиты</span
+                    ><span class="repair">ремонт</span
+                    ><span class="wiring-service">услуга проводки</span>
+                  </div>
+                </div>
+                <div class="frame-28">
+                  <a href="#" class="completed-projects-29"
+                    >Реализованные проекты</a
+                  >
+                  <div class="group-2a">
+                    <span class="offices">офисы</span
+                    ><span class="apartments">квартиры</span
+                    ><span class="shopping-centers">торговые центры</span
+                    ><span class="other">другие</span>
+                  </div>
+                </div>
+                <div class="frame-2b">
+                  <a href="{% url 'blog' %}" class="blog-2c">Блог</a
+                  ><a href="{% url 'contact' %}" class="contacts-2d">Контакты</a
+                  ><span class="privacy-policy"
+                    >Политика<br />конфиденциальности</span
+                  ><span class="terms-of-service"
+                    >Политика<br />соглашения</span
+                  >
+                </div>
+              </div>
+              <div class="cn">
+                <div class="social-icons"></div>
+                <div class="social-icons-2e"></div>
+                <div class="social-icons-2f"></div>
+                <div class="social-icons-30"></div>
+                <div class="social-icons-31"></div>
+                <div class="social-icons-32"></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <iframe
+              class="map"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2924.6559395115605!2d74.67486337613511!3d42.858997571150965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb6cfabd5350d%3A0x69ebc1fac406de9c!2z0JDRjiDQs9GA0LDQvdC0!5e0!3m2!1sru!2skg!4v1741892598498!5m2!1sru!2skg"
+              width="750"
+              height="350"
+              style="border: 0"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const dropdownButtons = document.querySelectorAll(
+          ".button, .button-3, .button-6, .button-9"
+        );
+
+        if (window.innerWidth > 767) {
+          dropdownButtons.forEach((button) => {
+            button.addEventListener("mouseenter", function () {
+              this.querySelector(".submenu").style.display = "block";
+              if (this.classList.contains("button")) {
+                this.style.borderRadius = "12px 12px 0 0";
+              }
+            });
+
+            button.addEventListener("mouseleave", function () {
+              this.querySelector(".submenu").style.display = "none";
+              if (this.classList.contains("button")) {
+                this.style.borderRadius = "12px";
+              }
+            });
+          });
+        }
+
+        dropdownButtons.forEach((button) => {
+          button.addEventListener("click", function (e) {
+            if (window.innerWidth <= 767) {
+              this.classList.toggle("active");
+
+              const submenu = this.querySelector(".submenu");
+              if (this.classList.contains("active")) {
+                submenu.style.display = "block";
+              } else {
+                submenu.style.display = "none";
+              }
+
+              dropdownButtons.forEach((otherButton) => {
+                if (otherButton !== button) {
+                  otherButton.classList.remove("active");
+                  const otherSubmenu = otherButton.querySelector(".submenu");
+                  if (otherSubmenu) {
+                    otherSubmenu.style.display = "none";
+                  }
+                }
+              });
+
+              e.stopPropagation();
+            }
+          });
+        });
+
+        document.addEventListener("click", function () {
+          if (window.innerWidth <= 767) {
+            dropdownButtons.forEach((button) => {
+              button.classList.remove("active");
+              const submenu = button.querySelector(".submenu");
+              if (submenu) {
+                submenu.style.display = "none";
+              }
+            });
+          }
+        });
+
+        const submenuItems = document.querySelectorAll(".submenu a");
+        submenuItems.forEach((item) => {
+          item.addEventListener("click", function (e) {
+            e.stopPropagation();
+          });
+        });
+      });
+    </script>
+    <!-- Generated by Codia AI - https://codia.ai/ -->
+  </body>
+</html>

@@ -1,0 +1,263 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Блог</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"
+    />
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
+  </head>
+  <body>
+  <style>
+    
+.main-container {
+height: auto;
+}
+
+/* Page numbers */ .pagination-numbers { 
+	display: flex;
+	align-items: center;
+}
+.pagination-number { 
+	display: flex; 
+	align-items: center; 
+	justify-content: center; 
+	width: 40px;
+
+height: 40px;
+margin: 0 5px; 
+border-radius: 50%;
+text-decoration: none;
+color: #333;
+font-size: 14px;
+font-weight: 500;
+transition: background-color 0.2s;
+}
+.pagination-number:hover {
+background-color: #e0e0e0;
+}
+.pagination-number.active {
+background-color: #FEBC30; 
+color: white;
+cursor: default;
+}
+.pagination-ellipsis {
+margin: 0 5px;
+color: #333;
+font-size: 14px;
+}
+
+.pagination-arrow:hover {
+background-color: #e0e0e0;
+}
+.pagination-arrow.disabled { 
+opacity: 0.5;
+cursor: default;
+pointer-events: none;
+}
+.arrow-left-round, .arrow-right-round {
+position: relative;
+width: 24px;
+height: 24px;
+display: flex;
+align-items: center; justify-content: center;
+}
+.arrow-left-round .arrow {
+width: 8px;
+height: 8px;
+border-left: 2px solid #333; 
+border-bottom: 2px solid #333;
+transform: rotate (45deg);
+}
+.arrow-right-round .arrow {
+width: 8px; height: 8px;
+border-right: 2px solid #333;
+border-top: 2px solid #333; transform: rotate(45deg);
+}
+
+  </style>
+    <div class="main-container">
+      <div class="container">
+        <div class="header">
+          <a href="{% url 'index' %}">
+            <div class="design-box-new"></div>
+          </a>
+          <div class="nav">
+            <a href="{% url 'catalog' %}" class="goods-services">Товары и услуги</a>
+            <a href="{% url 'index' %}" class="completed-projects"
+              >Реализованные проекты</a
+            >
+            <a href="{% url 'blog' %}" class="blog-1">Блог</a>
+            <a href="{% url 'contact' %}" class="contacts">Контакты</a>
+          </div>
+          <a href="{% url 'contact' %}">
+          <button class="btns">
+            <div class="btn">
+              <span class="get-in-touch">Выйти на связь</span>
+            </div>
+          </button>
+          </a>
+
+        </div>
+        <div class="frame">
+          <a href="{% url 'index' %}" class="home">Главная</a>
+<a href="{% url 'blog' %}" class="blog-link">/ Блог</a>
+        </div>
+<div class="frame-2">
+    {% for blog in blogs_groups.first_group %}
+    <div class="component">
+        <a href="{% url 'detail-blog' blog.id %}">
+            <div class="item">
+                <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="item">
+                <h3>{{ blog.title }}</h3>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="frame-5">
+    {% for blog in blogs_groups.second_group %}
+    <div class="component">
+        <a href="{% url 'detail-blog' blog.id %}">
+            <div class="item">
+                <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="item">
+                <h3>{{ blog.title }}</h3>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+      {% if page_obj.paginator.num_pages > 1 %}
+<div class="pagination">
+    <!-- Previous page arrow -->
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="pagination-arrow pagination-prev">
+            <div class="arrow-left-round">
+                <div class="arrow"></div>
+            </div>
+        </a>
+    {% else %}
+        <span class="pagination-arrow pagination-prev disabled">
+            <div class="arrow-left-round">
+                <div class="arrow"></div>
+            </div>
+        </span>
+    {% endif %}
+
+    <!-- Page numbers -->
+    <div class="pagination-numbers">
+        {% if page_obj.number > 3 %}
+            <a href="?page=1" class="pagination-number">1</a>
+            {% if page_obj.number > 4 %}
+                <span class="pagination-ellipsis">...</span>
+            {% endif %}
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if num == page_obj.number %}
+                <span class="pagination-number active">{{ num }}</span>
+            {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
+                <a href="?page={{ num }}" class="pagination-number">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.number < page_obj.paginator.num_pages|add:"-2" %}
+            {% if page_obj.number < page_obj.paginator.num_pages|add:"-3" %}
+                <span class="pagination-ellipsis">...</span>
+            {% endif %}
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="pagination-number">{{ page_obj.paginator.num_pages }}</a>
+        {% endif %}
+    </div>
+
+    <!-- Next page arrow -->
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="pagination-arrow pagination-next">
+            <div class="arrow-right-round">
+                <div class="arrow"></div>
+            </div>
+        </a>
+    {% else %}
+        <span class="pagination-arrow pagination-next disabled">
+            <div class="arrow-right-round">
+                <div class="arrow"></div>
+            </div>
+        </span>
+    {% endif %}
+</div>
+{% endif %}
+        <div class="frame-b">
+          <span class="our-videos-on-youtube">Наши видео на Youtube</span>
+          <div class="youtube">
+            <div class="noor"><iframe width="424" height="240" src="https://www.youtube.com/embed/VpBmBDb0IHI?si=C2XcLJ2Q-hsgjxBQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+            <div class="noor-c"><iframe width="424" height="240" src="https://www.youtube.com/embed/VpBmBDb0IHI?si=C2XcLJ2Q-hsgjxBQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+            <div class="noor-e"><iframe width="424" height="240" src="https://www.youtube.com/embed/VpBmBDb0IHI?si=C2XcLJ2Q-hsgjxBQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+          </div>
+        </div>
+      </div>
+      <div class="line"></div>
+      <div class="container">
+        <div class="frame-10">
+          <div class="frame-11">
+            <div class="design-for-box-new"></div>
+            <div class="group">
+              <div class="flex-row-ae">
+                <div class="frame-12">
+                  <a href="{% url 'catalog' %}" class="products-and-services"
+                    >Товары и услуги</a
+                  >
+                  <div class="group-13">
+                    <span class="span-lighting">светильники</span
+                    ><span class="span-tiles">плиты</span
+                    ><span class="span-repair">ремонт</span
+                    ><span class="span-wiring-service">услуга проводки</span>
+                  </div>
+                </div>
+                <div class="frame-14">
+                  <a href="{% url 'index' %}" class="span-projects"
+                    >Реализованные проекты</a
+                  >
+                  <div class="group-15">
+                    <span class="span-offices">офисы</span
+                    ><span class="span-apartments">квартиры</span
+                    ><span class="span-malls">торговые центры</span
+                    ><span class="span-others">другие</span>
+                  </div>
+                </div>
+                <div class="frame-16">
+                  <a href="{% url 'blog' %}" class="span-blog">Блог</a>
+                  <a href="{% url 'contact' %}" class="contacts-17">Контакты</a>
+                  <span class="privacy-policy"
+                    >Политика<br />конфиденциальности</span
+                  ><span class="terms-of-service"
+                    >Политика<br />соглашения</span
+                  >
+                </div>
+              </div>
+              <div class="cn">
+                <div class="social-icons"></div>
+                <div class="social-icons-18"></div>
+                <div class="social-icons-19"></div>
+                <div class="social-icons-1a"></div>
+                <div class="social-icons-1b"></div>
+                <div class="social-icons-1c"></div>
+              </div>
+            </div>
+          </div>
+<div><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2924.6559395115605!2d74.67486337613511!3d42.858997571150965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb6cfabd5350d%3A0x69ebc1fac406de9c!2z0JDRjiDQs9GA0LDQvdC0!5e0!3m2!1sru!2skg!4v1741892598498!5m2!1sru!2skg" width="750" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+
+        </a>
+        </div>
+      </div>
+    </div>
+    <!-- Generated by Codia AI - https://codia.ai/ -->
+  </body>
+</html>

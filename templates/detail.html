@@ -1,0 +1,1440 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Armstrong</title>
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap"
+    />
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"
+    />
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400&display=swap"
+    />
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}"/>
+</head>
+<body>
+<style>
+.frame-4 {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 350px;
+  background-color: #2A2A2A;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.main-container {
+height: auto;
+}
+.arrow-left-round, .arrow-left-round-5 {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  z-index: 5;
+  transition: background-color 0.3s ease;
+}
+
+.arrow-left-round {
+  left: 20px;
+}
+
+.arrow-left-round-5 {
+  right: 20px;
+}
+
+.arrow-left-round:hover, .arrow-left-round-5:hover {
+  background-color: rgba(254, 188, 48, 0.5);
+}
+
+.arrow {
+  width: 10px;
+  height: 10px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(45deg);
+}
+
+.arrow-left-round-5 .arrow {
+  transform: rotate(225deg);
+}
+
+/* Контейнер для изображений */
+.image-slider {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Стили для отдельного изображения */
+.image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #333;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 1;
+}
+
+.image.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+/* Счетчик изображений */
+.from-1-to-10 {
+  display: block;
+  margin-top: 16px;
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+}
+
+/* Добавляем стили для неактивных стрелок, когда достигнут конец слайдера */
+.arrow-left-round.disabled, .arrow-left-round-5.disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Styles for Armstrong Calculator */
+.calculation-results {
+  margin-top: 20px;
+  background-color: #f8f8f8;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+
+.calculation-results h3 {
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.calculation-results ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 5px;
+}
+
+.calculation-results li {
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px dashed #e0e0e0;
+}
+
+.calculation-results li:last-child {
+  border-bottom: none;
+}
+
+.calculation-results strong {
+  color: #2a2a2a;
+  font-weight: 600;
+}
+
+/* Enhance input fields */
+.frame-15 input, .frame-16 input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border 0.3s ease;
+}
+
+.frame-15 input:focus, .frame-16 input:focus {
+  border-color: #febc30;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(254, 188, 48, 0.2);
+}
+
+/* Style the Buy button */
+.button {
+  background-color: #febc30;
+  color: #2a2a2a;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #e5a718;
+}
+
+.button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Armstrong calculation summary on contact page */
+.armstrong-calculation-summary {
+  background-color: #f8f8f8;
+  padding: 20px;
+  margin-bottom: 25px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.armstrong-calculation-summary h3 {
+  margin-top: 0;
+  color: #333;
+  font-size: 18px;
+  border-bottom: 2px solid #febc30;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+}
+
+.armstrong-calculation-summary p {
+  margin: 8px 0;
+}
+
+.armstrong-calculation-summary ul {
+  padding-left: 20px;
+}
+
+.armstrong-calculation-summary li {
+  margin-bottom: 5px;
+}
+
+.container {
+  width: 100%;
+  max-width: 1440px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.header {
+  background: rgba(182, 177, 177, 0.25);
+    backdrop-filter: blur(6px);
+  width: 100%;
+  max-width: 100%;
+  margin: 20px auto;
+  padding: 15px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 35px;
+  font-size: 20px;
+}
+
+.design-for-box {
+  width: 180px;
+  min-width: 140px;
+  background-size: contain;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  width: auto;
+}
+
+.nav a {
+  font-family: Inter, var(--default-font-family);
+  white-space: normal;
+  text-align: center;
+}
+
+.btns {
+  /* margin-top: 10px; */
+  width: auto;
+}
+
+.btn {
+  width: auto;
+  
+  padding: 8px 15px;
+}
+
+.get-in-touch {
+  font-size: 21px;
+}
+
+.frame-2 {
+  width: 100%;
+  flex-direction: column;
+  padding: 0 20px;
+}
+
+.frame-3, .frame-6 {
+  width: 100%;
+  max-width: 100%;
+}
+
+.frame-4 {
+  height: 280px;
+}
+
+.frame-11 {
+  width: 100%;
+  flex-direction: column;
+  gap: 30px;
+  padding: 0 20px;
+}
+
+.ceiling-description {
+  width: 100%;
+  height: auto;
+}
+
+.frame-12 {
+  width: 100%;
+}
+
+.frame-14 {
+  flex-direction: column;
+}
+
+.frame-15, .frame-16 {
+  width: 100%;
+}
+
+.button {
+  width: 100%;
+}
+
+.frame-19 {
+  width: 100%;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.frame-1a {
+  width: 80%;
+}
+
+.frame-1f {
+  width: 100%;
+  padding: 0 20px;
+}
+
+.frame-20 {
+  width: 100%;
+  align-items: center;
+}
+
+.component, .component-22, .component-24 {
+  width: 100%;
+  max-width: 424px;
+  margin-bottom: 20px;
+}
+.frame-26 {
+  width: 100%;
+  padding: 0 20px;
+}
+
+.noor {
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.youtube-27, .noor-29, .noor-2b {
+  width: 100%;
+  max-width: 424px;
+  margin-bottom: 20px;
+}
+
+.youtube-27 iframe, .noor-29 iframe, .noor-2b iframe {
+  width: 100%;
+  height: 240px;
+}
+
+/* Footer section */
+.frame-2d {
+  width: 100%;
+  flex-direction: column;
+  padding: 20px;
+  gap: 30px;
+}
+
+.frame-2e {
+  /* width: 100%; */
+}
+
+.flex-row-e {
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  height: auto;
+  gap: 30px;
+}
+
+.frame-2f, .frame-32, .frame-35 {
+  /* width: 100%; */
+}
+
+.cn {
+  width: 100%;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+/* Map responsiveness */
+iframe[src*="google.com/maps"] {
+  width: 100%;
+  max-width: 100%;
+  height: 300px;
+}
+
+/* Armstrong calculator results */
+.calculation-results {
+  width: 100%;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+   .frame-20 {
+    display: block;
+  }
+  .header {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    margin: 15px auto;
+  }
+  
+  .nav {
+    order: 3;
+    width: 100%;
+    margin-top: 15px;
+    justify-content: space-between;
+  }
+  
+  .nav a {
+    
+  font-family: Inter, var(--default-font-family);
+    font-size: 18px;
+  }
+  
+  .btns {
+    margin-top: 0;
+  }
+  
+  .frame-2 {
+    flex-direction: row;
+  }
+  
+  .frame-3, .frame-6 {
+    width: 48%;
+  }
+  
+  .frame-20 {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .component, .component-22, .component-24 {
+    width: 100%;
+  }
+  
+  .noor {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .youtube-27, .noor-29, .noor-2b {
+    width: 48%;
+  }
+  
+  .flex-row-e {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+@media (min-width: 1024px) {  
+  .header {
+    flex-wrap: nowrap;
+     width: 100%;
+    margin: 20px auto;
+  }
+  
+  .nav {
+    order: initial;
+    width: auto;
+    margin-top: 0;
+  }
+  
+  .frame-2 {
+    flex-direction: row;
+  }
+  
+  .frame-3, .frame-6 {
+    width: 48%;
+  }
+  
+  .frame-11 {
+    flex-direction: row;
+  }
+  
+  .ceiling-description, .frame-12 {
+    width: 48%;
+  }
+  
+  .frame-19 {
+    /* flex-direction: row; */
+  }
+  
+  .frame-20 {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    flex-direction: row;
+  }
+  
+  .component, .component-22, .component-24 {
+    width: 100%;
+  }
+  
+  .noor {
+    flex-direction: row;
+  }
+  
+  .youtube-27, .noor-29, .noor-2b {
+    width: 32%;
+  }
+  
+  .frame-2d {
+    flex-direction: row;
+  }
+  
+  .flex-row-e {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 767px) {
+   .header {
+    flex-direction: column;
+    margin: 15px auto;
+    padding: 15px;
+    gap: 10px;
+    border-radius: 25px;
+  }
+  .frame-2e {
+    width: 100%;
+}
+
+.map {
+      margin-top: 420px;
+}
+
+  .header {
+    padding: 10px;
+    margin: 10px auto;
+        background: rgba(182, 177, 177, 0.25);
+  }
+  
+  .design-for-box {
+    width: 226px;
+    height: 48px;
+  }
+  
+  .nav {
+    width: 100%;
+    margin: 0px 0;
+    gap: 10px;
+  }
+  
+  .nav a {
+
+  font-family: Inter, var(--default-font-family);
+    font-size: 18px;
+  }
+
+  
+  .btns {
+    width: 100%;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+  
+  .get-in-touch {
+    font-size: 21px;
+  }
+  
+  .frame-4 {
+    height: 220px;
+  }
+  
+  .text-inside {
+
+  font-family: Inter, var(--default-font-family);
+    font-size: 21px;
+  }
+  
+  .btns {
+    width: 100%;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+  
+  .get-in-touch {
+    font-size: 21px;
+  }
+  
+  .frame-4 {
+    height: 220px;
+  }
+  
+  .text-inside {
+    width: 90%;
+    left: 50%;
+  }
+  
+  .text-inside h3 {
+    font-size: 24px;
+  }
+  
+  .frame-14, .frame-19 {
+    gap: 15px;
+  }
+  
+  /* Fix for small form elements */
+  .frame-input, .frame-input-17 {
+    height: 50px;
+  }
+  
+  .frame-input::placeholder, .frame-input-17::placeholder {
+    font-size: 16px;
+  }
+  
+  /* Smaller font sizes for mobile */
+  .ceiling-description {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  
+  .calculate-square-meters {
+    font-size: 18px;
+  }
+  
+  .armstrong-tiles {
+    font-size: 22px;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+
+  .map {
+    margin-top: 420px;
+  }
+
+  .frame-20 {
+    display: block;
+  }
+  .header {
+          background: rgba(182, 177, 177, 0.25);
+    border-radius: 25px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .design-for-box {       
+     width: 180px;
+        height: 38px;
+  }
+  
+  .nav {
+    gap: 8px;
+  }
+  
+  .nav a {
+  font-family: Inter, var(--default-font-family); 
+    font-size: 18px;
+  margin: 2px;
+  }
+.good-services {
+  
+      margin-top: 10px;
+}
+  .btn {
+
+    margin-top: 15px;
+    
+    padding: 11px 20px 11px 20px;
+    /* padding: 6px 12px; */
+  }
+  
+  .get-in-touch {
+    font-size: 21px;
+  }
+  
+  .frame-4 {
+    height: 180px;
+  }
+  
+  .arrow-left-round, .arrow-left-round-5 {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .rectangle, .rectangle-1b, .rectangle-1c {
+    width: 30px;
+    height: 30px;
+  }
+  
+ 
+}
+
+</style>
+<div class="main-container">
+    <div class="container">
+        <div class="header">
+            <a <a href="{% url 'index' %}">
+            <div class="design-for-box"></div>
+        </a>
+            <div class="nav">
+                <a href="{% url 'catalog' %}" class="goods-services">Товары и услуги</a> <a href="#" class="completed-projects">Реализованные проекты</a
+            > <a href="{% url 'blog' %}" class="blog">Блог</a>
+                 <a href="{% url 'contact' %}" class="contacts">Контакты</a>
+            </div>
+            <button class="btns">
+                <div class="btn">
+                    <a <a href="{% url 'contact' %}" class="get-in-touch">Выйти на связь</a>
+                </div>
+            </button>
+        </div>
+    <style>
+        .armstrong-lamps {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  min-width: fit-content;
+  max-width: 100%;
+  height: auto;
+  padding: 0 5px;
+  margin: 0;
+  color: #febc30;
+  font-family: Inter, var(--default-font-family);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.3;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -0.48px;
+  z-index: 7;
+}
+
+/* Добавьте также следующие стили для всей навигационной цепочки */
+.frame {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.home, .tiles {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* Стиль для родительского контейнера */
+.frame-1 {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+  gap: 15px; /* Расстояние между иконкой и текстом */
+}
+
+/* Стиль для иконки/элемента bulb */
+.bulb {
+  flex-shrink: 0; /* Предотвращает сжатие */
+}
+
+/* Обновленный стиль для заголовка */
+.armstrong-tiles {
+  flex: 1;
+  text-align: left;
+  width: auto;
+  max-width: 100%;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #FFFFFF;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+    </style>
+        <div class="frame">
+            <a href="{% url 'index' %}" class="home">Главная</a>
+            <span class="tiles">{{ product.category.name }}</span>
+        </div>
+        <div class="frame-1">
+            <div class="bulb">
+                <div class="elements"></div>
+            </div>
+            <span class="armstrong-tiles">{{ product.name }}</span>
+        </div>
+        <div class="frame-2">
+            <div class="frame-3">
+    <div class="frame-4">
+        <div class="arrow-left-round" id="prev-image">
+            <div class="arrow"></div>
+        </div>
+
+        <!-- Контейнер для изображений -->
+        <div class="image-slider">
+            {% if product.image1 %}
+                <div class="image active" data-index="1" style="background-image: url('{{ product.image1.url }}')"></div>
+            {% endif %}
+
+            {% if product.image2 %}
+                <div class="image" data-index="2" style="background-image: url('{{ product.image2.url }}')"></div>
+            {% endif %}
+
+            {% if product.image3 %}
+                <div class="image" data-index="3" style="background-image: url('{{ product.image3.url }}')"></div>
+            {% endif %}
+
+            {% if product.image4 %}
+                <div class="image" data-index="4" style="background-image: url('{{ product.image4.url }}')"></div>
+            {% endif %}
+
+            {% if product.image5 %}
+                <div class="image" data-index="5" style="background-image: url('{{ product.image5.url }}')"></div>
+            {% endif %}
+
+            {% if product.image6 %}
+                <div class="image" data-index="6" style="background-image: url('{{ product.image6.url }}')"></div>
+            {% endif %}
+
+            {% if product.image7 %}
+                <div class="image" data-index="7" style="background-image: url('{{ product.image7.url }}')"></div>
+            {% endif %}
+
+            {% if product.image8 %}
+                <div class="image" data-index="8" style="background-image: url('{{ product.image8.url }}')"></div>
+            {% endif %}
+
+            {% if product.image9 %}
+                <div class="image" data-index="9" style="background-image: url('{{ product.image9.url }}')"></div>
+            {% endif %}
+
+            {% if product.image10 %}
+                <div class="image" data-index="10" style="background-image: url('{{ product.image10.url }}')"></div>
+            {% endif %}
+
+            {% if not product.image1 %}
+                <div class="image active" data-index="1"></div>
+            {% endif %}
+        </div>
+
+        <div class="arrow-left-round-5" id="next-image">
+            <div class="arrow"></div>
+        </div>
+    </div>
+    <span class="from-1-to-10" id="image-counter">1 из <span id="total-images">0</span></span>
+</div>
+            <div class="frame-6">
+                <div class="harakt">
+                    <div class="frame-7">
+                        <span class="product-name">Наименование продукта</span>
+                        <span class="armstrong">{{ product.name }}</span>
+                    </div>
+                    <div class="frame-8">
+                        <span class="warranty">Гарантия</span>
+                        <span class="text-e">{{ product.warranty }}</span>
+                    </div>
+                    <div class="frame-9">
+                        <span class="region">Регион</span>
+                        <span class="europe">{{ product.region }}</span>
+                    </div>
+                </div>
+                <div class="harakt-a">
+                    <div class="frame-b">
+                        <span class="retail-price">Цена розничная:</span>
+                        <span class="soms">{{ product.retail_price }} сом</span>
+                    </div>
+                    <div class="frame-c">
+                        <span class="wholesale-price">Цена крупнооптовая:</span>
+                        <span class="soms-d">{{ product.wholesale_price }} сом</span>
+                    </div>
+                    <div class="frame-e">
+                        <span class="wholesale-price-f">Цена оптовая:</span>
+                        <span class="soms-10">{{ product.bulk_price }} сом</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div id="product-category" data-category="{{ product.category.name }}" style="display:none;"></div>
+        <div class="frame-11">
+            <span class="ceiling-description">{{ product.description }}</span>
+            <div class="frame-12">
+            <div class="frame-13">
+              <span class="calculate-square-meters"
+                >Рассчитать в квадратных метрах</span
+              >
+              <div class="frame-14">
+                <div class="frame-15">
+                  <input class="frame-input" placeholder="Длина" />
+                </div>
+                <div class="frame-16">
+                  <input class="frame-input-17" placeholder="Ширина" />
+                </div>
+              </div>
+            </div>
+            <div class="frame-18">
+              <div class="frame-19">
+                <button class="button"><span class="buy">Купить</span></button>
+
+                <div style="display: flex;">
+
+ <div class="frame-1a">
+                  <div class="rectangle"></div>
+                  <div class="rectangle-1b"></div>
+                  <div class="rectangle-1c"></div>
+                </div>
+
+<select id="currency-select" class="frame-1d">
+  <option value="KGS">Сом</option>
+  <option value="USD">Доллар</option>
+
+</select>
+                </div>
+               
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="frame-1f">
+            <span class="similar-products">Похожие товары</span>
+            <div class="frame-20">
+                {% if random_product %}
+                <a href="{% url 'detail' random_product.id %}">
+                    <div class="component">
+                        {% if random_product.image1 %}
+                            <div class="image-21"
+                                 style="background-image: url('{{ random_product.image1.url }}')"></div>
+                        {% else %}
+                            <div class="image-21"></div>
+                        {% endif %}
+
+                        <div class="text-inside">
+                            <h3>{{ random_product.name }}</h3>
+                            <p>{{ random_product.description }}</p>
+                            <h4>Цена розничная:</h4>
+                            <span>{{ random_product.retail_price }} руб</span>
+                            <div class="colors">
+                                <div class="brown"></div>
+                                <div class="white"></div>
+                            </div>
+
+                            <br/>
+                            <button>Купить</button>
+                        </div>
+                    </div>
+                </a>
+                {% endif %}
+
+                {% if random_product2 %}
+                <a href="{% url 'detail' random_product2.id %}">
+                    <div class="component-22">
+                        {% if random_product2.image1 %}
+                            <div class="image-23"
+                                 style="background-image: url('{{ random_product2.image1.url }}')"></div>
+                        {% else %}
+                            <div class="image-23"></div>
+                        {% endif %}
+                        <div class="text-inside">
+                            <h3>{{ random_product2.name }}</h3>
+                            <p>{{ random_product2.description }}</p>
+                            <h4>Цена розничная:</h4>
+                            <span>{{ random_product2.retail_price }} руб</span>
+                            <div class="colors">
+                                <div class="brown"></div>
+                                <div class="white"></div>
+                            </div>
+                            <br/>
+                            <button>Купить</button>
+                        </div>
+                    </div>
+                </a>
+                {% endif %}
+
+                {% if random_product3 %}
+                <a href="{% url 'detail' random_product3.id %}">
+                    <div class="component-24">
+                        {% if random_product3.image1 %}
+                            <div class="image-25"
+                                 style="background-image: url('{{ random_product3.image1.url }}')"></div>
+                        {% else %}
+                            <div class="image-25"></div>
+                        {% endif %}
+                        <div class="text-inside">
+                            <h3>{{ random_product3.name }}</h3>
+                            <p>{{ random_product3.description }}</p>
+                            <h4>Цена розничная:</h4>
+                            <span>{{ random_product3.retail_price }} руб</span>
+                            <div class="colors">
+                                <div class="brown"></div>
+                                <div class="white"></div>
+                            </div>
+                            <br/>
+                            <button>Купить</button>
+                        </div>
+                    </div>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="frame-26">
+            <span class="youtube">Наши видео на Youtube</span>
+            <div class="noor">
+                <div class="youtube-27">
+                    <iframe width="424" height="240" src="https://www.youtube.com/embed/VpBmBDb0IHI?si=C2XcLJ2Q-hsgjxBQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="noor-29">
+                    <iframe width="424" height="240" src="https://www.youtube.com/embed/VpBmBDb0IHI?si=C2XcLJ2Q-hsgjxBQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="noor-2b">
+                    <iframe width="424" height="240" src="https://www.youtube.com/embed/VpBmBDb0IHI?si=C2XcLJ2Q-hsgjxBQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="line"></div>
+    <div class="container">
+        <div class="frame-2d">
+            <div class="frame-2e">
+                <a <a href="{% url 'index' %}">
+                <div class="design-for-box-new"></div>
+            </a>
+                <div class="group">
+                    <div class="flex-row-e">
+                        <div class="frame-2f">
+                            <a <a href="{% url 'catalog' %}" class="products-and-services">Товары и услуги</a>
+                            <div class="group-30">
+                    <span class="lighting">светильники</span
+                    ><span class="tiles-31">плиты</span
+                            ><span class="repair">ремонт</span
+                            ><span class="service-wiring">услуга проводки</span>
+                            </div>
+                        </div>
+                        <div class="frame-32">
+                  <span class="completed-projects-33"
+                  >Реализованные проекты</span
+                  >
+                            <div class="group-34">
+                    <span class="offices">офисы</span
+                    ><span class="apartments">квартиры</span
+                            ><span class="shopping-centers">торговые центры</span
+                            ><span class="others">другие</span>
+                            </div>
+                        </div>
+                        <div class="frame-35">
+                            <a <a href="{% url 'blog' %}" class="blog-36">Блог</a>
+                            <a <a href="{% url 'contact' %}" class="contacts-37">Контакты</a>
+                            <a href="#" class="privacy-policy">Политика<br/>конфиденциальности</a>
+                            <a href="#" class="terms-of-service">Политика<br/>соглашения</a>
+                        </div>
+                    </div>
+                    <div class="cn">
+                        <div class="social-icons"></div>
+                        <div class="social-icons-38"></div>
+                        <div class="social-icons-39"></div>
+                        <div class="social-icons-3a"></div>
+                        <div class="social-icons-3b"></div>
+                        <div class="social-icons-3c"></div>
+                    </div>
+                </div>
+            </div>
+            <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3201.7793528410466!2d74.63698900101348!3d42.85622845264179!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb6572914c7b7%3A0x669f8315bcc304af!2z0KLQtdGF0L3QviDQn9Cw0YDQug!5e0!3m2!1sru!2skg!4v1739354829416!5m2!1sru!2skg"
+                    width="750" height="350" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Get the product category information
+  const productCategory = document.getElementById('product-category').getAttribute('data-category');
+  const isArmstrongCeiling = productCategory === "Подвесные потолки Армстронг";
+
+  // Get the form elements
+  const lengthInput = document.querySelector('.frame-15 input');
+  const widthInput = document.querySelector('.frame-16 input');
+  const buyButton = document.querySelector('.button');
+  const calculationSection = document.querySelector('.frame-13');
+
+  // Handle non-Armstrong ceiling products
+  if (!isArmstrongCeiling) {
+    // Hide calculator for non-Armstrong ceiling products
+    calculationSection.style.display = 'none';
+
+    // Make the buy button redirect directly to the contact page
+    buyButton.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      const productName = document.querySelector('.armstrong').textContent.trim();
+
+      // Redirect to contact page with just the product name
+      const queryParams = new URLSearchParams({
+        product: productName,
+        message: `Заказ продукта "${productName}".`
+      });
+
+      window.location.href = `{% url 'contact' %}?${queryParams.toString()}`;
+    });
+
+    return; // Exit the function for non-Armstrong products
+  }
+
+  // Continue with Armstrong ceiling calculator only for the right category
+  // Set up the calculation results div
+  const resultsDiv = document.createElement('div');
+  resultsDiv.className = 'calculation-results';
+  resultsDiv.style.marginTop = '20px';
+  resultsDiv.style.backgroundColor = '#f5f5f5';
+  resultsDiv.style.padding = '15px';
+  resultsDiv.style.borderRadius = '8px';
+  resultsDiv.style.border = '1px solid #ddd';
+
+  // Insert results container after the calculation inputs
+  document.querySelector('.frame-14').parentNode.insertBefore(resultsDiv, document.querySelector('.frame-14').nextSibling);
+
+  // Add event listeners for real-time calculation
+  lengthInput.addEventListener('input', calculateMaterials);
+  widthInput.addEventListener('input', calculateMaterials);
+
+  // Function to calculate materials based on the formulas
+  function calculateMaterials() {
+    const length = parseFloat(lengthInput.value) || 0;
+    const width = parseFloat(widthInput.value) || 0;
+
+    if (length > 0 && width > 0) {
+      const area = length * width;
+
+      // Calculate materials based on the formulas
+      const tiles = Math.ceil(area / 0.36); // Divide by 0.36 and round up
+      const edgeProfile = Math.ceil(area * 0.2); // Area × 0.2
+      const suspensionProfile = Math.ceil(area * 0.27); // Area × 0.27
+      const suspensionElements = Math.ceil(area * 1.7); // Area × 1.7
+
+      // Format and display results
+      resultsDiv.innerHTML = `
+        <h3 style="margin-bottom: 10px; color: #333;">Результаты расчета:</h3>
+        <p>Площадь потолка: <strong>${area.toFixed(2)} м²</strong></p>
+        <p style="margin-bottom: 5px;">Потребуется:</p>
+        <ul style="list-style-type: none; padding-left: 0; margin-top: 5px;">
+          <li style="margin-bottom: 5px;">- Плиты: <strong>${tiles} шт.</strong></li>
+          <li style="margin-bottom: 5px;">- Направляющий уголок: <strong>${edgeProfile} шт.</strong></li>
+          <li style="margin-bottom: 5px;">- Подвесной профиль (3м): <strong>${suspensionProfile} шт.</strong></li>
+          <li style="margin-bottom: 5px;">- Подвес: <strong>${suspensionElements} шт.</strong></li>
+        </ul>
+      `;
+
+      // Store calculation data for form submission
+      const calculationData = {
+        area: area.toFixed(2),
+        tiles: tiles,
+        edgeProfile: edgeProfile,
+        suspensionProfile: suspensionProfile,
+        suspensionElements: suspensionElements
+      };
+
+      // Save to sessionStorage for use during form submission
+      sessionStorage.setItem('armstrongCalculation', JSON.stringify(calculationData));
+
+      // Enable buy button
+      buyButton.disabled = false;
+    } else {
+      // Clear results if inputs are invalid
+      resultsDiv.innerHTML = '';
+      buyButton.disabled = true;
+    }
+  }
+
+  // Handle the buy button click to redirect to contact form with data
+  buyButton.addEventListener('click', function(e) {
+    e.preventDefault();
+
+    const length = parseFloat(lengthInput.value) || 0;
+    const width = parseFloat(widthInput.value) || 0;
+
+    if (length > 0 && width > 0) {
+      const calculationData = JSON.parse(sessionStorage.getItem('armstrongCalculation') || '{}');
+      const productName = document.querySelector('.armstrong').textContent.trim();
+
+      // Create query parameters to send to contact page
+      const queryParams = new URLSearchParams({
+        product: productName,
+        length: length,
+        width: width,
+        area: calculationData.area,
+        tiles: calculationData.tiles,
+        edgeProfile: calculationData.edgeProfile,
+        suspensionProfile: calculationData.suspensionProfile,
+        suspensionElements: calculationData.suspensionElements,
+        message: `Заказ плит Армстронг "${productName}". Размеры помещения: ${length}×${width}м. Площадь: ${calculationData.area}м². Необходимые материалы: Плиты - ${calculationData.tiles}шт, Направляющий уголок - ${calculationData.edgeProfile}шт, Подвесной профиль - ${calculationData.suspensionProfile}шт, Подвес - ${calculationData.suspensionElements}шт.`
+      });
+
+      // Redirect to contact page with calculation data
+      window.location.href = `{% url 'contact' %}?${queryParams.toString()}`;
+    }
+  });
+});
+
+// Script to handle Armstrong calculation data in the contact form
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if we have calculation data in the URL
+  const urlParams = new URLSearchParams(window.location.search);
+
+  // Fields we expect from the calculation
+  const calculationFields = [
+    'product', 'length', 'width', 'area', 'tiles',
+    'edgeProfile', 'suspensionProfile', 'suspensionElements',
+    'message'
+  ];
+
+  // Check if this is an Armstrong calculation form submission
+  const hasCalculationData = calculationFields.some(field => urlParams.has(field));
+
+  if (hasCalculationData) {
+    // Get the message field - this might be different depending on your form structure
+    // Adjust the selector as needed
+    const messageField = document.querySelector('textarea[name="message"]');
+    const nameField = document.querySelector('input[name="name"]');
+    const subjectField = document.querySelector('input[name="subject"]');
+
+    if (messageField) {
+      // Create a formatted message with all the calculation details
+      const product = urlParams.get('product') || '';
+      const length = urlParams.get('length') || '';
+      const width = urlParams.get('width') || '';
+      const area = urlParams.get('area') || '';
+      const tiles = urlParams.get('tiles') || '';
+      const edgeProfile = urlParams.get('edgeProfile') || '';
+      const suspensionProfile = urlParams.get('suspensionProfile') || '';
+      const suspensionElements = urlParams.get('suspensionElements') || '';
+
+      const calculationMessage = `
+Заказ плит Армстронг "${product}"
+
+Расчет потолка:
+- Размеры помещения: ${length}×${width}м
+- Площадь: ${area}м²
+
+Необходимые материалы:
+- Плиты: ${tiles} шт.
+- Направляющий уголок: ${edgeProfile} шт.
+- Подвесной профиль (3м): ${suspensionProfile} шт.
+- Подвес: ${suspensionElements} шт.
+
+Дополнительная информация:
+`;
+
+      // Set the message field value
+      messageField.value = calculationMessage;
+
+      // Set subject field if it exists
+      if (subjectField) {
+        subjectField.value = `Заказ плит Армстронг "${product}" - ${area}м²`;
+      }
+
+      // Create a summary box to display at the top of the form
+      const formContainer = messageField.closest('form');
+
+      if (formContainer) {
+        const summaryBox = document.createElement('div');
+        summaryBox.className = 'armstrong-calculation-summary';
+        summaryBox.style.backgroundColor = '#f5f5f5';
+        summaryBox.style.padding = '15px';
+        summaryBox.style.marginBottom = '20px';
+        summaryBox.style.borderRadius = '8px';
+        summaryBox.style.border = '1px solid #ddd';
+
+        summaryBox.innerHTML = `
+          <h3 style="margin-top: 0; color: #333;">Детали заказа плит Армстронг</h3>
+          <p><strong>Продукт:</strong> ${product}</p>
+          <p><strong>Размеры:</strong> ${length}×${width}м</p>
+          <p><strong>Площадь:</strong> ${area}м²</p>
+          <p><strong>Материалы:</strong></p>
+          <ul style="padding-left: 20px;">
+            <li>Плиты: ${tiles} шт.</li>
+            <li>Направляющий уголок: ${edgeProfile} шт.</li>
+            <li>Подвесной профиль (3м): ${suspensionProfile} шт.</li>
+            <li>Подвес: ${suspensionElements} шт.</li>
+          </ul>
+          <p style="margin-bottom: 0; font-style: italic;">Эта информация будет добавлена в ваше сообщение.</p>
+        `;
+
+        // Insert the summary box at the top of the form
+        formContainer.insertBefore(summaryBox, formContainer.firstChild);
+      }
+    }
+  }
+});
+
+
+// For the custom radio buttons
+document.querySelectorAll('.rectangle, .rectangle-1b, .rectangle-1c').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.rectangle, .rectangle-1b, .rectangle-1c').forEach(el => {
+      el.classList.remove('selected');
+    });
+    item.classList.add('selected');
+  });
+});
+
+// Image slider functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Find all slider elements
+    const images = document.querySelectorAll('.image-slider .image');
+    const prevButton = document.getElementById('prev-image');
+    const nextButton = document.getElementById('next-image');
+    const imageCounter = document.getElementById('image-counter');
+    const totalImagesElem = document.getElementById('total-images');
+
+    // If no images, hide the slider
+    if (images.length === 0) {
+        const sliderContainer = document.querySelector('.frame-4');
+        if (sliderContainer) {
+            sliderContainer.style.display = 'none';
+        }
+        return;
+    }
+
+    // Set total number of images
+    const totalImages = images.length;
+    totalImagesElem.textContent = totalImages;
+
+    // Variable to track current image
+    let currentIndex = 0;
+
+    // Show or hide navigation buttons based on current index
+    function updateNavigationButtons() {
+        prevButton.classList.toggle('disabled', currentIndex === 0);
+        nextButton.classList.toggle('disabled', currentIndex === totalImages - 1);
+    }
+
+    // Update image counter
+    function updateCounter() {
+        imageCounter.textContent = `${currentIndex + 1} из ${totalImages}`;
+    }
+
+    // Show image by index
+    function showImage(index) {
+        // Hide all images
+        images.forEach(img => {
+            img.classList.remove('active');
+        });
+
+        // Show selected image
+        images[index].classList.add('active');
+
+        // Update counter and button states
+        currentIndex = index;
+        updateCounter();
+        updateNavigationButtons();
+    }
+
+    // Navigation button handlers
+    prevButton.addEventListener('click', function() {
+        if (currentIndex > 0) {
+            showImage(currentIndex - 1);
+        }
+    });
+
+    nextButton.addEventListener('click', function() {
+        if (currentIndex < totalImages - 1) {
+            showImage(currentIndex + 1);
+        }
+    });
+
+    // Add keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft') {
+            if (currentIndex > 0) {
+                showImage(currentIndex - 1);
+            }
+        } else if (e.key === 'ArrowRight') {
+            if (currentIndex < totalImages - 1) {
+                showImage(currentIndex + 1);
+            }
+        }
+    });
+
+    // Initialize slider
+    showImage(0);
+
+    // Add swipe for mobile devices
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    const slider = document.querySelector('.image-slider');
+
+    slider.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    }, false);
+
+    slider.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, false);
+
+    function handleSwipe() {
+        if (touchEndX < touchStartX - 50) {
+            // Swipe left - next image
+            if (currentIndex < totalImages - 1) {
+                showImage(currentIndex + 1);
+            }
+        } else if (touchEndX > touchStartX + 50) {
+            // Swipe right - previous image
+            if (currentIndex > 0) {
+                showImage(currentIndex - 1);
+            }
+        }
+    }
+});
+</script>
+</body>
+</html>

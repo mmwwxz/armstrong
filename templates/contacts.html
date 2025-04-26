@@ -1,0 +1,636 @@
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Armstrong</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"
+    />
+    <link rel="stylesheet" href="{%static 'css/contacts.css' %}" />
+
+    <style>
+     
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+      .frame {
+        margin-top: 780px;
+      }
+
+      .main {
+        max-width: 1440px;
+        margin: 0 auto;
+      }
+      .main-container {
+
+      }
+      .section1 {
+      max-width: 1440px;
+  /* margin: 0 auto;  */
+
+      }
+      body {
+        background-color: black;
+      }
+
+      .image {
+        left: 50%;
+      }
+      .line {
+        left: 0;
+      }
+      @media screen and (max-width: 768px) {
+        .design-for-box-new {
+                 width: 180px;
+        height: 38px;
+        margin-top: 10px;
+        }
+        .header {
+              height: 260px;
+          width: 95%;
+          margin: 10px 0;
+          padding: 15px;
+          flex-direction: column;
+          gap: 15px;
+          border-radius: 20px;
+        }
+
+        .nav {
+          width: 100%;
+          /* flex-direction: none; */
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+
+     
+
+        .btns {
+          width: 100%;
+          margin-top: 10px;
+        }
+
+        .btn {
+          width: 400px;
+        }
+        /* Основные контейнеры */
+        .main-container {
+          width: 100%;
+          height: auto;
+          overflow-x: hidden;
+        }
+
+        .container {
+          max-width: 100%;
+          padding: 0 15px;
+        }
+
+        /* Шапка сайта */
+        /* .header {
+        width: 95%;
+        height: auto;
+        padding: 15px;
+        flex-direction: column;
+        gap: 15px;
+        border-radius: 20px;
+    } */
+
+        .design-for-box-new {
+          background-size: contain;
+        }
+
+        .nav {
+          /* width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px; */
+        }
+
+        .goods-services,
+        .completed-projects-15,
+        .blog-16,
+        .contacts-17 {
+          font-size: 21px;
+        }
+
+        .btns {
+          width: auto;
+          min-width: 200px;
+          max-width: 100%;
+          /* width: 100%;
+        margin-top: 10px; */
+        }
+
+        .btn {
+          width: 400px;
+        }
+
+        .get-in-touch {
+          font-size: 18px;
+        }
+
+        /* Секция промокода */
+        .frame-18 {
+          width: 90%;
+          height: auto;
+          left: 5%;
+          padding: 20px;
+        }
+
+        .armstrong {
+          font-size: 40px;
+        }
+
+        .promo-code-15 {
+          font-size: 24px;
+        }
+
+        /* Изображение справа */
+        .image {
+          width: 100%;
+          height: 500px;
+          left: 0;
+          top: 500px;
+          background-position: center;
+        }
+
+        .frame-c {
+          width: 90%;
+          margin: 20px auto;
+          left: 0;
+        }
+
+        .vyiti-na-svyaz {
+          font-size: 28px;
+          width: 100%;
+        }
+
+        .frame-input,
+        .frame-input-10,
+        .frame-input-12 {
+          width: 100%;
+        }
+
+        /* Информационный блок */
+        .frame-19 {
+          width: 90%;
+          height: auto;
+          left: 5%;
+          top: 1000px;
+          margin-bottom: 30px;
+        }
+
+        .frame-1a,
+        .frame-1b,
+        .frame-1d {
+          width: 100%;
+        }
+
+        .armstrong-email,
+        .ayu-grant-tc,
+        .phone-number-1f {
+          font-size: 20px;
+          height: auto;
+          white-space: normal;
+        }
+
+        .cn-20 {
+          width: 100%;
+          flex-wrap: wrap;
+        }
+
+        /* Разделительная линия */
+        .line {
+          top: 1280px;
+        }
+
+        /* Футер */
+        .frame {
+          flex-direction: column;
+          width: 100%;
+          padding: 40px 15px;
+          gap: 30px;
+          margin-top: 500px;
+        }
+
+        .frame-1 {
+          width: 100%;
+        }
+
+        .design-box-new {
+          width: 150px;
+          background-size: contain;
+        }
+
+        .flex-row-ac {
+          flex-direction: column;
+          height: auto;
+          align-items: flex-start;
+          width: 100%;
+          gap: 30px;
+        }
+
+        .frame-2,
+        .frame-4,
+        .frame-6 {
+          width: 100%;
+        }
+
+        /* Карта */
+        iframe {
+          width: 100%;
+          height: 300px;
+        }
+
+        /* Социальные иконки в футере */
+        .cn {
+          width: 100%;
+          flex-wrap: wrap;
+          justify-content: flex-start;
+        }
+      }
+
+      /* Дополнительные правила для очень маленьких экранов */
+      @media screen and (max-width: 480px) {
+         .btn {
+          width: 320px;
+        }
+        /* Шапка */
+        .header {
+          padding: 10px;
+        }
+
+        .nav {
+          gap: 10px;
+        }
+
+        .goods-services,
+        .completed-projects-15,
+        .blog-16,
+        .contacts-17 {
+          display: inline-block;
+          text-align: center;
+
+          font-size: 18px;
+        }
+
+        /* Форма обратной связи */
+        .frame-c {
+          padding: 15px;
+        }
+
+        .vyiti-na-svyaz {
+          font-size: 24px;
+        }
+
+        .frame-input::placeholder,
+        .frame-input-10::placeholder,
+        .frame-input-12::placeholder {
+          font-size: 16px;
+        }
+
+        .phone-number-14 {
+          font-size: 16px;
+        }
+
+        /* Контактная информация */
+        .armstrong-email,
+        .ayu-grant-tc,
+        .phone-number-1f {
+          font-size: 18px;
+        }
+
+        /* Промокод */
+        .armstrong {
+          font-size: 36px;
+        }
+
+        .promo-code-15 {
+          font-size: 20px;
+        }
+
+        /* Исправление высоты и позиционирования */
+        .image {
+          height: 400px;
+        }
+
+        .frame-19 {
+          top: 920px;
+        }
+
+        .line {
+          top: 1200px;
+        }
+
+        .frame {
+          margin-top: 430px;
+        }
+
+        /* Социальные иконки */
+        .social-icons-21,
+        .social-icons-22,
+        .social-icons-23,
+        .social-icons-24,
+        .social-icons-25,
+        .social-icons-26,
+        .social-icons,
+        .social-icons-7,
+        .social-icons-8,
+        .social-icons-9,
+        .social-icons-a,
+        .social-icons-b {
+          width: 30px;
+          height: 30px;
+        }
+      }
+
+      /* Исправления для работы с контентом внутри формы */
+      @media screen and (max-width: 768px) {
+        .map {
+          margin-top: 450px;
+        }
+        .frame-e,
+        .frame-f,
+        .frame-11 {
+          width: 100%;
+        }
+
+        .frame-11 {
+          height: 120px;
+        }
+
+        .frame-input-12 {
+          height: 120px;
+        }
+
+        .frame-d {
+          width: 100%;
+        }
+
+        /* Исправление для адреса */
+        .ayu-grant-tc {
+          margin-top: 0 !important;
+          line-height: 1.3;
+        }
+
+        /* Социальные иконки */
+        .cn-20 {
+          justify-content: flex-start;
+        }
+
+        .social-icons-21,
+        .social-icons-22,
+        .social-icons-23,
+        .social-icons-24,
+        .social-icons-25,
+        .social-icons-26 {
+          margin-top: 0 !important;
+        }
+      }
+
+      /* Дополнительные правки для исправления верстки */
+      @media screen and (max-width: 768px) {
+        body {
+          overflow-x: hidden;
+        }
+
+        /* Общая структура */
+        .main {
+          width: 100%;
+          overflow-x: hidden;
+        }
+
+        /* Переопределение абсолютных позиций */
+        .main-container {
+          position: relative;
+          height: auto;
+        }
+
+        /* Структура страницы */
+        .main-container > * {
+          position: relative;
+        }
+
+        /* Переопределяем позиционирование разделов */
+        .header {
+                  background: rgba(182, 177, 177, 0.25);
+          position: relative;
+        top: 0;
+        margin: 10px auto;
+        transform: none;
+        left: auto;
+        }
+
+        .image {
+          margin-bottom: 100px;
+        }
+
+        .frame-18 {
+          position: relative;
+          top: auto;
+          left: auto;
+          margin: 60px auto;
+        }
+
+        .image {
+          position: relative;
+          top: auto;
+          left: auto;
+          margin: 20px auto;
+          height: 580px;
+        }
+        .frame-19,
+        .line {
+          position: relative;
+          top: auto;
+          left: auto;
+          margin: 20px auto;
+        }
+
+        .frame-c {
+          margin-bottom: 20px;
+          position: relative;
+          margin: 0px auto;
+          width: 90%;
+          left: auto;
+        }
+
+        /* Восстанавливаем нормальный поток документа */
+        .frame {
+          margin-top: 20px;
+        }
+
+        /* Другие важные стили */
+        input,
+        textarea {
+          font-size: 16px !important; /* Предотвращает масштабирование на iOS */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-container">
+        <div class="container">
+            
+          <div class="header">
+            <a href="{% url 'index' %}">
+              <div class="design-for-box-new"></div>
+            </a>
+
+            <div class="nav">
+              <a href="{% url 'catalog' %}" class="goods-services"
+                >Товары и услуги</a
+              >
+              <a href="{%   url 'index' %}" class="completed-projects-15"
+                >Реализованные проекты</a
+              >
+              <a href="{% url 'blog' %}" class="blog-16">Блог</a
+              ><a href="{% url 'contact' %}" class="contacts-17">Контакты</a>
+            </div>
+            <button class="btns">
+              <div class="btn">
+                <a href="{% url 'contact' %}" class="get-in-touch"
+                  >Выйти на связь</a
+                >
+              </div>
+            </button>
+          </div>
+
+          <div class="section1">
+
+
+
+          <div class="image">
+            <div class="frame-c">
+              <span class="vyiti-na-svyaz">Выйти на связь</span>
+              <div class="frame-d">
+                <div class="frame-e">
+                  <input class="frame-input" placeholder="Имя" />
+                </div>
+                <div class="frame-f">
+                  <input class="frame-input-10" placeholder="Номер телефона" />
+                </div>
+                <div class="frame-11">
+                  <input
+                    class="frame-input-12"
+                    placeholder="Оставить комментарий"
+                  />
+                </div>
+                <button class="frame-13">
+                  <span class="phone-number-14">Номер телефона</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="frame-18">
+            <span class="armstrong">arm1strong</span
+            ><span class="promo-code-15">промокод на 15%</span>
+          </div>
+          <div class="frame-19" style="gap: 50px">
+            <div class="frame-1a">
+              <div class="mail"><div class="elements"></div></div>
+              <span class="armstrong-email">{{ info.email }}</span>
+            </div>
+            <div class="frame-1b">
+              <div class="location"><div class="elements-1c"></div></div>
+              <span class="ayu-grant-tc" style="margin-top: -70px">
+                <p style="margin-bottom: 3px">улица Чокана Валиханова, 2</p>
+                <p style="margin-bottom: 3px">ТЦ Аю Гранд, 1 этаж</p>
+                <p style="margin-bottom: 3px">Бишкек, Кыргызстан</p>
+              </span>
+            </div>
+            <div class="frame-1d" style="margin-top: 5px">
+              <div class="call"><div class="elements-1e"></div></div>
+              <span class="phone-number-1f">{{ info.phone_number }}</span>
+            </div>
+            <div class="cn-20">
+              <div class="social-icons-21" style="margin-top: -25px"></div>
+              <div class="social-icons-22" style="margin-top: -25px"></div>
+              <div class="social-icons-23" style="margin-top: -25px"></div>
+              <div class="social-icons-24" style="margin-top: -25px"></div>
+              <div class="social-icons-25" style="margin-top: -25px"></div>
+              <div class="social-icons-26" style="margin-top: -25px"></div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="line"></div>
+
+      <div class="container">
+        <div class="frame">
+          <div class="frame-1">
+            <a <a href="{% url 'index' %}">
+              <div class="design-box-new"></div>
+            </a>
+            <div class="group">
+              <div class="flex-row-ac">
+                <div class="frame-2">
+                  <a <a href="{% url 'catalog' %}" class="products-services"
+                    >Товары и услуги</a
+                  >
+                  <div class="group-3">
+                    <span class="lighting">светильники</span
+                    ><span class="tiles">плиты</span
+                    ><span class="repair">ремонт</span
+                    ><span class="wiring-service">услуга проводки</span>
+                  </div>
+                </div>
+                <div class="frame-4">
+                  <span class="completed-projects">Реализованные проекты</span>
+                  <div class="group-5">
+                    <span class="offices">офисы</span
+                    ><span class="apartments">квартиры</span
+                    ><span class="shopping-centers">торговые центры</span
+                    ><span class="others">другие</span>
+                  </div>
+                </div>
+                <div class="frame-6">
+                  <a <a href="{% url 'blog' %}" class="blog">Блог</a
+                  ><a <a href="{% url 'contact' %}" class="contacts">Контакты</a
+                  ><span class="privacy-policy"
+                    >Политика<br />конфиденциальности</span
+                  ><span class="terms-of-service"
+                    >Политика<br />соглашения</span
+                  >
+                </div>
+              </div>
+              <div class="cn">
+                <div class="social-icons"></div>
+                <div class="social-icons-7"></div>
+                <div class="social-icons-8"></div>
+                <div class="social-icons-9"></div>
+                <div class="social-icons-a"></div>
+                <div class="social-icons-b"></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <iframe
+              class="map"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2924.6559395115605!2d74.67486337613511!3d42.858997571150965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb6cfabd5350d%3A0x69ebc1fac406de9c!2z0JDRjiDQs9GA0LDQvdC0!5e0!3m2!1sru!2skg!4v1741892598498!5m2!1sru!2skg"
+              width="750"
+              height="350"
+              style="border: 0"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{% static 'js/formValidation.js' %}"></script>
+  </body>
+</html>
